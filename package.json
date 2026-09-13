@@ -9,11 +9,14 @@
     "build": "bun build src/index.ts --outdir dist --target bun",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest run",
+    "test": "vitest run tests/unit tests/integration",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
+    "test:integration:ollama": "vitest run tests/ollama-integration",
     "eval:dev": "bun scripts/evaluate-triage.ts datasets/triage-dev.jsonl",
     "eval:heldout": "bun scripts/evaluate-triage.ts datasets/triage-eval.jsonl",
+    "eval:ollama:dev": "bun scripts/evaluate-ollama-triage.ts datasets/triage-dev.jsonl",
+    "eval:ollama:heldout": "bun scripts/evaluate-ollama-triage.ts datasets/triage-eval.jsonl",
     "db:generate": "prisma generate"
   },
   "dependencies": {

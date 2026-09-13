@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { loadConfig } from "../../src/config.ts";
+import { loadConfig, loadOllamaSettings } from "../../src/config.ts";
 
 describe("config", () => {
   it("loads valid env", () => {
@@ -23,6 +23,20 @@ describe("config", () => {
     });
     expect(cfg).toMatchObject({
       TRIAGE_CLASSIFIER: "ollama",
+      OLLAMA_BASE_URL: "http://localhost:11434",
+      OLLAMA_MODEL: "qwen2.5:7b-instruct-q5_K_S",
+      OLLAMA_TIMEOUT_MS: 120000,
+    });
+  });
+
+  it("loads standalone Ollama settings for evaluation and integration tools", () => {
+    expect(
+      loadOllamaSettings({
+        OLLAMA_BASE_URL: "http://localhost:11434",
+        OLLAMA_MODEL: "qwen2.5:7b-instruct-q5_K_S",
+        OLLAMA_TIMEOUT_MS: "120000",
+      }),
+    ).toEqual({
       OLLAMA_BASE_URL: "http://localhost:11434",
       OLLAMA_MODEL: "qwen2.5:7b-instruct-q5_K_S",
       OLLAMA_TIMEOUT_MS: 120000,

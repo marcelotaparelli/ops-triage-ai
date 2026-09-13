@@ -1,4 +1,9 @@
 import { checkDatabase, closePrisma, getPrisma } from "./db.ts";
+import {
+  ClassifierInvalidResponseError,
+  ClassifierTimeoutError,
+  ClassifierUnavailableError,
+} from "./application/errors/classifier-errors.ts";
 import type { TriageTicket } from "./application/triage-ticket.ts";
 import { parseTicketInput } from "./http/triage-request.ts";
 
@@ -58,7 +63,16 @@ export async function handleRequest(
 
     try {
       return json(200, await dependencies.triageTicket.execute(parsed.data));
-    } catch {
+    } catch (error) {
+      if (error instanceof ClassifierTimeoutError) {
+        return json(504, { error: "classifier_timeout" });
+      }
+      if (error instanceof ClassifierUnavailableError) {
+        return json(503, { error: "classifier_unavailable" });
+      }
+      if (error instanceof ClassifierInvalidResponseError) {
+        return json(502, { error: "classifier_invalid_response" });
+      }
       return json(500, { error: "internal_error" });
     }
   }

@@ -6,4 +6,5 @@ coverage/
 *.local
 src/generated/
 
-/prisma/src/generated/prisma
+# backup histórico da sessão anterior quebrada — nunca versionar
+.agent/session-broken-backup.json

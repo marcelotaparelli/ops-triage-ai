@@ -86,4 +86,20 @@ describe("DeterministicTriageClassifier", () => {
     expect(result.rationale).toMatch(/BUG_(HIGH|PARTIAL)_SIGNAL/);
     expect(result.rationale.length).toBeLessThan(240);
   });
+
+  it("fulfills the complete classifier result contract asynchronously", async () => {
+    const pending = classify("Bug in report", "The report fails");
+    expect(pending).toBeInstanceOf(Promise);
+    expect(Object.keys(await pending).sort()).toEqual(
+      [
+        "category",
+        "confidence",
+        "priority",
+        "rationale",
+        "risk",
+        "suggestedTeam",
+        "summary",
+      ].sort(),
+    );
+  });
 });

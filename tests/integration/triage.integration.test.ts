@@ -5,7 +5,7 @@ const DATABASE_URL = process.env["DATABASE_URL"];
 const PORT = Number(process.env["TRIAGE_TEST_PORT"] ?? "3460");
 
 describe("POST /tickets/triage through a real Bun server", () => {
-  it("returns the deterministic ClassifierResult", async () => {
+  it("returns the deterministic TriageDecision", async () => {
     if (!DATABASE_URL) throw new Error("DATABASE_URL is required for integration tests");
     const server = await startBunServer(PORT, DATABASE_URL);
     try {
@@ -28,6 +28,9 @@ describe("POST /tickets/triage through a real Bun server", () => {
         summary: "Feature request: export CSV",
         rationale:
           "FEATURE_REQUEST_HIGH_SIGNAL: feature_request | PRIORITY_LOW_DEFAULT | RISK_LOW_DEFAULT",
+        requiresHumanReview: false,
+        decisionSource: "DETERMINISTIC",
+        reviewReasons: [],
       });
     } finally {
       await stopBunServer(server);

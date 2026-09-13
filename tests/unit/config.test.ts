@@ -43,6 +43,32 @@ describe("config", () => {
     });
   });
 
+  it("loads Ollama settings for the hybrid mode", () => {
+    expect(
+      loadConfig({
+        PORT: "3000",
+        DATABASE_URL: "postgresql://x@y/z",
+        TRIAGE_CLASSIFIER: "hybrid",
+        OLLAMA_BASE_URL: "http://localhost:11434",
+        OLLAMA_MODEL: "model",
+        OLLAMA_TIMEOUT_MS: "120000",
+      }),
+    ).toMatchObject({
+      TRIAGE_CLASSIFIER: "hybrid",
+      OLLAMA_MODEL: "model",
+    });
+  });
+
+  it("requires Ollama settings for the hybrid mode", () => {
+    expect(() =>
+      loadConfig({
+        PORT: "3000",
+        DATABASE_URL: "postgresql://x@y/z",
+        TRIAGE_CLASSIFIER: "hybrid",
+      }),
+    ).toThrow(/OLLAMA_BASE_URL|OLLAMA_MODEL|OLLAMA_TIMEOUT_MS/);
+  });
+
   it("does not require Ollama settings for the deterministic provider", () => {
     expect(
       loadConfig({

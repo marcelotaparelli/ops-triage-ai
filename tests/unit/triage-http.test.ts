@@ -12,7 +12,7 @@ import { handleRequest, type ServerDependencies } from "../../src/server.ts";
 function dependencies(classifier: TriageClassifier = new DeterministicTriageClassifier()) {
   return {
     checkDb: async () => true,
-    triageTicket: new TriageTicket(classifier),
+    triageTicket: new TriageTicket({ mode: "deterministic", classifier }),
   } satisfies ServerDependencies;
 }
 
@@ -25,7 +25,7 @@ function request(body: string, contentType = "application/json") {
 }
 
 describe("POST /tickets/triage", () => {
-  it("returns a ClassifierResult for a valid payload", async () => {
+  it("returns a deterministic TriageDecision for a valid payload", async () => {
     const res = await handleRequest(
       request(
         JSON.stringify({
@@ -47,6 +47,41 @@ describe("POST /tickets/triage", () => {
       summary: "Feature request: export CSV",
       rationale:
         "FEATURE_REQUEST_HIGH_SIGNAL: feature_request | PRIORITY_LOW_DEFAULT | RISK_LOW_DEFAULT",
+      requiresHumanReview: false,
+      decisionSource: "DETERMINISTIC",
+      reviewReasons: [],
+    });
+  });
+
+  it("returns a complete hybrid TriageDecision", async () => {
+    const deterministic = new DeterministicTriageClassifier();
+    const llm: TriageClassifier = {
+      classify: async (input) => deterministic.classify(input),
+    };
+    const hybridDependencies = {
+      checkDb: async () => true,
+      triageTicket: new TriageTicket({
+        mode: "hybrid",
+        deterministicClassifier: deterministic,
+        llmClassifier: llm,
+      }),
+    } satisfies ServerDependencies;
+
+    const res = await handleRequest(
+      request(JSON.stringify({ title: "Need help", description: "How do I export?" })),
+      hybridDependencies,
+    );
+
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      category: "SUPPORT",
+      priority: "LOW",
+      risk: "LOW",
+      suggestedTeam: "SUPPORT",
+      confidence: 0.9,
+      requiresHumanReview: false,
+      decisionSource: "HYBRID",
+      reviewReasons: [],
     });
   });
 

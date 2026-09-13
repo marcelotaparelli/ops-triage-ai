@@ -32,20 +32,34 @@ export interface EvaluationResult {
   metrics: EvaluationMetrics;
 }
 
-interface EvaluationPrediction {
+export interface EvaluationPrediction {
+  id: string;
   expected: EvaluationExample["expected"];
   actual: ClassifierResult;
+}
+
+export interface DetailedEvaluationResult extends EvaluationResult {
+  predictions: readonly EvaluationPrediction[];
 }
 
 export async function evaluateTriage(
   classifier: TriageClassifier,
   examples: readonly EvaluationExample[],
 ): Promise<EvaluationResult> {
+  const result = await evaluateTriageDetailed(classifier, examples);
+  return { examples: result.examples, metrics: result.metrics };
+}
+
+export async function evaluateTriageDetailed(
+  classifier: TriageClassifier,
+  examples: readonly EvaluationExample[],
+): Promise<DetailedEvaluationResult> {
   if (examples.length === 0) throw new Error("Evaluation dataset must not be empty");
 
   const predictions: EvaluationPrediction[] = [];
   for (const example of examples) {
     predictions.push({
+      id: example.id,
       expected: example.expected,
       actual: await classifier.classify(example.input),
     });
@@ -53,7 +67,13 @@ export async function evaluateTriage(
 
   return {
     examples: examples.length,
-    metrics: {
+    metrics: calculateMetrics(predictions),
+    predictions,
+  };
+}
+
+function calculateMetrics(predictions: readonly EvaluationPrediction[]): EvaluationMetrics {
+  return {
       categoryAccuracy: round(
         ratio(predictions.filter((row) => row.actual.category === row.expected.category).length, predictions.length),
       ),
@@ -95,7 +115,6 @@ export async function evaluateTriage(
           (row) => row.expected.risk,
         ),
       ),
-    },
   };
 }
 

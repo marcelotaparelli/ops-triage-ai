@@ -7,7 +7,11 @@ import {
   SuggestedTeam,
   type ClassifierResult,
 } from "../../src/domain/triage.ts";
-import { evaluateTriage, type EvaluationExample } from "../../src/evaluation/evaluate-triage.ts";
+import {
+  evaluateTriage,
+  evaluateTriageDetailed,
+  type EvaluationExample,
+} from "../../src/evaluation/evaluate-triage.ts";
 import { parseTriageDataset } from "../../src/evaluation/triage-dataset.ts";
 
 class FixedClassifier implements TriageClassifier {
@@ -69,6 +73,30 @@ describe("triage evaluation", () => {
 
   it("rejects empty evaluation input", async () => {
     await expect(evaluateTriage(new FixedClassifier([]), [])).rejects.toThrow(/must not be empty/);
+  });
+
+  it("exposes prediction details while preserving the aggregate metrics", async () => {
+    const detailed = await evaluateTriageDetailed(
+      new FixedClassifier([
+        result(Category.INCIDENT, Priority.HIGH, Risk.HIGH),
+        result(Category.OTHER, Priority.LOW, Risk.LOW),
+      ]),
+      examples,
+    );
+
+    expect(detailed.metrics.categoryAccuracy).toBe(0.5);
+    expect(detailed.predictions).toEqual([
+      {
+        id: "one",
+        expected: examples[0]!.expected,
+        actual: result(Category.INCIDENT, Priority.HIGH, Risk.HIGH),
+      },
+      {
+        id: "two",
+        expected: examples[1]!.expected,
+        actual: result(Category.OTHER, Priority.LOW, Risk.LOW),
+      },
+    ]);
   });
 
   it("validates JSONL and rejects duplicate ids", () => {

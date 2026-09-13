@@ -20,6 +20,7 @@ jobs:
       - run: bun run typecheck
       - run: bun run lint
       - run: bun run test:unit
+      - run: bun run eval:dev
       - run: bun run build
 
   integration:

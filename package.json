@@ -12,6 +12,8 @@
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
+    "eval:dev": "bun scripts/evaluate-triage.ts datasets/triage-dev.jsonl",
+    "eval:heldout": "bun scripts/evaluate-triage.ts datasets/triage-eval.jsonl",
     "db:generate": "prisma generate"
   },
   "dependencies": {

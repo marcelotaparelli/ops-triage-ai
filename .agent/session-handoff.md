@@ -1,77 +1,83 @@
-# Session Handoff — OPS TRIAGE AI (Fase 1 Foundation)
-
-> Backup histórico `.agent/session-broken-backup.json` não reutilizado.
-> Sem secrets neste arquivo.
+# Session Handoff — OPS TRIAGE AI
 
 ## Estado final
 
-A FASE 1 — FOUNDATION está CONCLUÍDA.
+A FASE 1 — FOUNDATION e a FASE 2 — DETERMINISTIC BASELINE + EVALUATION estão
+concluídas. A Fase 3 não foi implementada.
 
-- GitHub Actions `ci`, run `34772813353`: SUCCESS
-- Job `quality`: PASS
-- Job `integration`: PASS
-- Fase 2 não iniciada
+## Fase 2 implementada
 
-Execução: https://github.com/marcelotaparelli/ops-triage-ai/actions/runs/34772813353
+- Domain com `TicketInput`, `Category`, `Priority`, `Risk`,
+  `SuggestedTeam` e `ClassifierResult`.
+- Port `TriageClassifier` assíncrono.
+- Application `TriageTicket`, dependente do port.
+- `DeterministicTriageClassifier` em
+  `src/application/classifiers/deterministic-triage-classifier.ts`.
+- Scoring explícito por categoria: frases específicas têm maior peso,
+  sinais no título pesam mais que sinais na descrição e desempate só ocorre
+  em empate exato.
+- Regras de prioridade, risco, equipe, confidence heurística
+  (0.50/0.70/0.90) e rationale auditável.
+- `POST /tickets/triage` com Zod somente na borda HTTP.
+- Datasets sintéticos em inglês:
+  `datasets/triage-dev.jsonl` e `datasets/triage-eval.jsonl`.
+- Evaluator reproduzível sem thresholds arbitrários.
+- `eval:dev` integrado ao job `quality`.
+- Held-out fora da CI contínua.
 
-## Causa raiz e correção final
+Domain e Application não dependem de Zod, Prisma, PostgreSQL, Bun HTTP ou
+Ollama. Não há LLM, HybridPolicy, TriageDecision, persistência ou feedback.
 
-A falha anterior `ReferenceError: Bun is not defined` não era causada pelo banco,
-Prisma ou PostgreSQL. O Vitest 5 executava
-`tests/integration/health.integration.test.ts` em um worker Node, conforme
-`environment: "node"` em `vitest.config.ts`. O teste importava e chamava
-`startServer()` diretamente nesse worker; ao chegar em `Bun.serve`, o global
-`Bun` não existia naquele runtime.
+## Commits da Fase 2
 
-A correção no commit `944d124` (`fix: run health integration server with Bun`)
-manteve Vitest como framework e Bun como runtime oficial. O teste Vitest agora
-inicia `bun src/index.ts` como processo filho real, aguarda o servidor Bun ficar
-pronto, faz `GET /health` pela rede e encerra o processo ao final. Não há mock de
-`Bun.serve`, remoção de teste, conversão para teste unitário ou relaxamento de
-gate.
+- `38ebee2` — feat: add deterministic triage baseline core
+- `b8be133` — feat: expose deterministic ticket triage endpoint
+- `20d3ccc` — feat: add reproducible triage evaluation
+- `3928371` — docs: record deterministic baseline v1 metrics
 
-## Validação local
+## CI
 
-Executada com Bun 1.4.2 e Prisma 7.10.0:
+GitHub Actions run `34779989863`:
 
-- `bun install --frozen-lockfile`: PASS
-- `bun --bun run prisma generate`: PASS
-- `bun run typecheck`: PASS
-- `bun run lint`: PASS
-- `bun run test:unit`: PASS — 2 arquivos, 9 testes
-- `bun run build`: PASS
-- Integração local: não executada por ausência de PostgreSQL/Docker local
+- QUALITY: PASS
+  - install
+  - Prisma generate
+  - typecheck
+  - lint
+  - 36 unit tests
+  - eval:dev
+  - build
+- INTEGRATION: PASS
+  - PostgreSQL real
+  - Prisma generate
+  - integration tests
 
-## Validação CI real
+## Métricas da baseline v1
 
-GitHub Actions no commit `944d124e325db228de22e67bfca35f0cd8698c12`:
+### Dev
 
-- Bun 1.4.2: validado
-- Vitest 5.0.0: validado
-- Prisma Client 7.10.0: gerado e validado
-- `@prisma/adapter-pg` / PrismaPg: validado pelo caminho real da aplicação
-- PostgreSQL 16.15 (`postgres:16-alpine`): iniciado e marcado `healthy`
-- `tests/integration/db.integration.test.ts`: PASS — conexão e `SELECT 1` real
-- `tests/integration/health.integration.test.ts`: PASS
-- Servidor real iniciado com Bun e `Bun.serve`: validado
-- `GET /health` com PostgreSQL real: HTTP 200
-- Corpo validado: `{ "status": "healthy", "db": "up" }`
-- Resultado do job `integration`: 2 arquivos e 2 testes PASS
+- category accuracy: 1.0000
+- category macro-F1: 1.0000
+- priority accuracy: 1.0000
+- risk accuracy: 1.0000
+- recall HIGH/CRITICAL priority: 1.0000
+- recall HIGH risk: 1.0000
 
-O caminho comprovado pela CI foi:
+### Held-out
 
-`Bun → Vitest → processo Bun → Bun.serve → Prisma 7.10.0 → PrismaPg → PostgreSQL real → SELECT 1 → GET /health → HTTP 200 → status healthy / db up`
+- category accuracy: 0.8286
+- category macro-F1: 0.8512
+- priority accuracy: 0.9000
+- risk accuracy: 0.9571
+- recall HIGH/CRITICAL priority: 0.7857
+- recall HIGH risk: 0.5714
 
-## Commits da Fase 1
+O benchmark held-out está congelado. Ele foi executado uma única vez depois do
+congelamento e não deve ser usado para tuning ou ajuste de regras. A principal
+limitação observada é o recall de HIGH risk no held-out: 0.5714.
 
-- `09bae3f` — feat: establish ops triage foundation
-- `37e4f25` — test: cover GET /health with real PostgreSQL in integration job
-- `247f345` — docs: update session handoff with phase 1 closure status
-- `eeaefee` — fix: correct .gitignore entries for generated client and session backup
-- `944d124` — fix: run health integration server with Bun
-- Commit posterior: atualização final deste handoff com a CI verde
+## Próximo marco
 
-## Próximo passo
-
-Planejar a Fase 2 em uma sessão futura. Não iniciar implementação da Fase 2 a
-partir deste handoff sem uma nova solicitação explícita.
+Planejar a Fase 3, comparando a baseline determinística com um classifier
+baseado em LLM/Ollama. Não iniciar a implementação da Fase 3 a partir deste
+handoff.

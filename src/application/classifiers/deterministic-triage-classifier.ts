@@ -4,9 +4,9 @@ import {
   type HeuristicConfidence,
   Priority,
   Risk,
-  SuggestedTeam,
   type TicketInput,
 } from "../../domain/triage.ts";
+import { suggestedTeamForCategory } from "../../domain/suggested-team.ts";
 import type { TriageClassifier } from "../ports/triage-classifier.ts";
 
 interface CategorySignal {
@@ -101,7 +101,7 @@ export class DeterministicTriageClassifier implements TriageClassifier {
       category: winner.category,
       priority: priority.value,
       risk: risk.value,
-      suggestedTeam: teamFor(winner.category),
+      suggestedTeam: suggestedTeamForCategory(winner.category),
       confidence,
       summary: summarize(input.title),
       rationale: [
@@ -216,19 +216,6 @@ function classifyRisk(category: Category, text: string): { value: Risk; code: st
     return { value: Risk.MEDIUM, code: "RISK_MEDIUM_OPERATIONAL" };
   }
   return { value: Risk.LOW, code: "RISK_LOW_DEFAULT" };
-}
-
-function teamFor(category: Category): SuggestedTeam {
-  const teams: Record<Category, SuggestedTeam> = {
-    [Category.INCIDENT]: SuggestedTeam.INFRASTRUCTURE,
-    [Category.BUG]: SuggestedTeam.DEVELOPMENT,
-    [Category.FEATURE_REQUEST]: SuggestedTeam.PRODUCT,
-    [Category.CONTENT_CHANGE]: SuggestedTeam.CONTENT,
-    [Category.SUPPORT]: SuggestedTeam.SUPPORT,
-    [Category.ACCESS]: SuggestedTeam.SUPPORT,
-    [Category.OTHER]: SuggestedTeam.HUMAN_REVIEW,
-  };
-  return teams[category];
 }
 
 function normalize(value: string): string {

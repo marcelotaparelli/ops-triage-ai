@@ -5,6 +5,7 @@ import {
 } from "../../application/errors/classifier-errors.ts";
 import type { TriageClassifier } from "../../application/ports/triage-classifier.ts";
 import type { ClassifierResult, TicketInput } from "../../domain/triage.ts";
+import { suggestedTeamForCategory } from "../../domain/suggested-team.ts";
 import {
   buildOllamaTicketPrompt,
   OLLAMA_TRIAGE_SYSTEM_PROMPT,
@@ -80,7 +81,10 @@ export class OllamaTriageClassifier implements TriageClassifier {
 
       const result = OllamaClassifierResultSchema.safeParse(content);
       if (!result.success) throw new ClassifierInvalidResponseError();
-      return result.data;
+      return {
+        ...result.data,
+        suggestedTeam: suggestedTeamForCategory(result.data.category),
+      };
     } catch (error) {
       if (error instanceof ClassifierTimeoutError) throw error;
       if (controller.signal.aborted) throw new ClassifierTimeoutError();

@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { DeterministicTriageClassifier } from "../../src/application/classifiers/deterministic-triage-classifier.ts";
+import {
+  ClassifierInvalidResponseError,
+  ClassifierTimeoutError,
+  ClassifierUnavailableError,
+} from "../../src/application/errors/classifier-errors.ts";
 import type { TriageClassifier } from "../../src/application/ports/triage-classifier.ts";
 import { TriageTicket } from "../../src/application/triage-ticket.ts";
 import { handleRequest, type ServerDependencies } from "../../src/server.ts";
@@ -85,5 +90,23 @@ describe("POST /tickets/triage", () => {
     );
     expect(res.status).toBe(500);
     expect(await res.text()).toBe('{"error":"internal_error"}');
+  });
+
+  it.each([
+    [new ClassifierTimeoutError(), 504, "classifier_timeout"],
+    [new ClassifierUnavailableError(), 503, "classifier_unavailable"],
+    [new ClassifierInvalidResponseError(), 502, "classifier_invalid_response"],
+  ])("maps classifier errors without leaking details", async (error, status, code) => {
+    const classifier: TriageClassifier = {
+      classify: async () => {
+        throw error;
+      },
+    };
+    const res = await handleRequest(
+      request(JSON.stringify({ title: "Need help", description: "A question" })),
+      dependencies(classifier),
+    );
+    expect(res.status).toBe(status);
+    expect(await res.json()).toEqual({ error: code });
   });
 });

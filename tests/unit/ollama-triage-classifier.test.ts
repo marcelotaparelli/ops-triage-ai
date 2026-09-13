@@ -19,7 +19,6 @@ const validResult = {
   category: "INCIDENT",
   priority: "CRITICAL",
   risk: "HIGH",
-  suggestedTeam: "INFRASTRUCTURE",
   confidence: 0.9,
   summary: "Production checkout outage",
   rationale: "Broad production outage affects all customers.",
@@ -52,7 +51,7 @@ describe("OllamaTriageClassifier", () => {
         title: "Production checkout outage",
         description: "All customers are blocked",
       }),
-    ).resolves.toEqual(validResult);
+    ).resolves.toEqual({ ...validResult, suggestedTeam: "INFRASTRUCTURE" });
 
     expect(capturedUrl).toBe("http://ollama.internal:11434/api/chat");
     expect(capturedInit?.method).toBe("POST");
@@ -71,7 +70,6 @@ describe("OllamaTriageClassifier", () => {
         "category",
         "priority",
         "risk",
-        "suggestedTeam",
         "confidence",
         "summary",
         "rationale",
@@ -87,7 +85,6 @@ describe("OllamaTriageClassifier", () => {
     ["category", "UNKNOWN"],
     ["priority", "URGENT"],
     ["risk", "CRITICAL"],
-    ["suggestedTeam", "MANAGEMENT"],
     ["confidence", 0.8],
   ])("rejects an invalid %s", async (field, value) => {
     const fetchImpl: HttpFetch = async () =>
@@ -107,6 +104,17 @@ describe("OllamaTriageClassifier", () => {
         description: "Description",
       }),
     ).rejects.toBeInstanceOf(ClassifierInvalidResponseError);
+  });
+
+  it("derives suggestedTeam from the validated category", async () => {
+    const fetchImpl: HttpFetch = async () =>
+      ollamaResponse(JSON.stringify({ ...validResult, category: "BUG" }));
+    await expect(
+      new OllamaTriageClassifier(config, fetchImpl).classify({
+        title: "Ticket",
+        description: "Description",
+      }),
+    ).resolves.toMatchObject({ category: "BUG", suggestedTeam: "DEVELOPMENT" });
   });
 
   it.each([

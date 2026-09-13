@@ -2,9 +2,9 @@
 
 ## Estado final
 
-As Fases 1 — FOUNDATION, 2 — DETERMINISTIC BASELINE + EVALUATION e 3 — OLLAMA
-LLM CLASSIFIER estão concluídas. O experimento Ollama v3 foi congelado e sua
-avaliação held-out final foi executada uma única vez.
+As Fases 1 — FOUNDATION, 2 — DETERMINISTIC BASELINE + EVALUATION, 3 — OLLAMA
+LLM CLASSIFIER e 4 — HYBRID POLICY estão concluídas. O experimento Ollama v3
+permanece congelado e sua avaliação held-out final foi executada uma única vez.
 
 ## Fase 2 implementada
 
@@ -26,8 +26,9 @@ avaliação held-out final foi executada uma única vez.
 - `eval:dev` integrado ao job `quality`.
 - Held-out fora da CI contínua.
 
-Domain e Application não dependem de Zod, Prisma, PostgreSQL, Bun HTTP ou
-Ollama. Não há HybridPolicy, TriageDecision, persistência ou feedback.
+Na Fase 2, Domain e Application não dependiam de Zod, Prisma, PostgreSQL, Bun
+HTTP ou Ollama. Ainda não havia HybridPolicy, TriageDecision, persistência ou
+feedback.
 
 ## Commits da Fase 2
 
@@ -157,8 +158,55 @@ próximo do DEV, fornecendo evidência de generalização dentro dos benchmarks
 sintéticos. O held-out não deve ser reexecutado para tuning e seus exemplos
 não foram inspecionados.
 
+## Fase 4 — Hybrid Policy concluída
+
+Princípio central: **the classifier classifies; the policy decides.**
+
+- O LLM é o semantic classifier.
+- O classifier determinístico é o deterministic guardrail e comparison signal.
+- Ambos recebem o mesmo `TicketInput`; não são considerados estatisticamente
+  independentes.
+- `HybridPolicy` é a decision layer pura, sem IO e sem dependências de Ollama,
+  HTTP, Zod ou Prisma.
+- `TriageDecision` estende `ClassifierResult` com `requiresHumanReview`,
+  `decisionSource` e `reviewReasons`.
+- No sucesso híbrido, o `ClassifierResult` do LLM é preservado integralmente e
+  `decisionSource` é `HYBRID`.
+- Não existe fusão campo a campo nem recálculo de classificação pela policy.
+- Divergência em category/priority/risk, confidence 0.5, priority HIGH/CRITICAL
+  ou risk HIGH exige revisão humana.
+- Falhas conhecidas preservam internamente `TIMEOUT`, `UNAVAILABLE` ou
+  `INVALID_RESPONSE` e retornam o resultado determinístico integral com
+  `DETERMINISTIC_FALLBACK` e revisão humana.
+- O fallback é graceful degradation para manter a API operacional; não afirma
+  equivalência entre o resultado determinístico e o LLM.
+- Falhas desconhecidas continuam propagando.
+- Modos `deterministic`, `ollama` e `hybrid` permanecem disponíveis por
+  `TRIAGE_CLASSIFIER`.
+
+### Commits
+
+- `8081e6c` — feat: add hybrid triage policy
+- `af1af6d` — feat: orchestrate hybrid triage decisions
+
+### Gates e validações
+
+- typecheck: PASS
+- lint: PASS
+- 94 unit tests: PASS
+- deterministic eval:dev: PASS, todas as métricas em 1.0000
+- git diff --check: PASS
+- Build e integração automatizada não estavam disponíveis no sandbox sem Bun e
+  PostgreSQL.
+- Happy path real no host: HTTP → deterministic + Ollama → HybridPolicy →
+  `TriageDecision`, com `decisionSource: HYBRID` e `HIGH_SEVERITY`.
+- Fallback real no host com Ollama parado: API permaneceu disponível, preservou
+  integralmente o resultado determinístico e retornou
+  `decisionSource: DETERMINISTIC_FALLBACK`, com `HIGH_SEVERITY` e
+  `LLM_UNAVAILABLE`.
+
 ## Próximo marco
 
-Planejar uma fase futura de HybridPolicy usando os trade-offs medidos entre a
-baseline determinística e o Ollama v3. Não implementar HybridPolicy,
-persistência ou outras fases sem planejamento e aprovação explícitos.
+Planejar a Fase 5 somente após aprovação explícita. Não implementar
+persistência ou qualquer novo marco a partir deste handoff sem esse
+planejamento.

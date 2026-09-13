@@ -82,13 +82,14 @@ export class OllamaTriageClassifier implements TriageClassifier {
       if (!result.success) throw new ClassifierInvalidResponseError();
       return result.data;
     } catch (error) {
+      if (error instanceof ClassifierTimeoutError) throw error;
+      if (controller.signal.aborted) throw new ClassifierTimeoutError();
       if (
         error instanceof ClassifierInvalidResponseError ||
         error instanceof ClassifierUnavailableError
       ) {
         throw error;
       }
-      if (controller.signal.aborted) throw new ClassifierTimeoutError();
       throw new ClassifierUnavailableError();
     } finally {
       clearTimeout(timeout);

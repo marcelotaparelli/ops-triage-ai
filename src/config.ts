@@ -29,6 +29,9 @@ const ConfigSchema = z.discriminatedUnion("TRIAGE_CLASSIFIER", [
   BaseConfigSchema.merge(OllamaSettingsSchema).extend({
     TRIAGE_CLASSIFIER: z.literal("ollama"),
   }),
+  BaseConfigSchema.merge(OllamaSettingsSchema).extend({
+    TRIAGE_CLASSIFIER: z.literal("hybrid"),
+  }),
 ]);
 
 export type AppConfig = z.infer<typeof ConfigSchema>;

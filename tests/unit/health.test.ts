@@ -3,7 +3,10 @@ import { DeterministicTriageClassifier } from "../../src/application/classifiers
 import { TriageTicket } from "../../src/application/triage-ticket.ts";
 import { handleRequest } from "../../src/server.ts";
 
-const triageTicket = new TriageTicket(new DeterministicTriageClassifier());
+const triageTicket = new TriageTicket({
+  mode: "deterministic",
+  classifier: new DeterministicTriageClassifier(),
+});
 const dependencies = (checkDb: () => Promise<boolean>) => ({ checkDb, triageTicket });
 
 describe("GET /health", () => {

@@ -1,6 +1,6 @@
 import { Category, Priority, Risk, type TicketInput } from "../../domain/triage.ts";
 
-export const OLLAMA_TRIAGE_PROMPT_VERSION = "ollama-triage-v2";
+export const OLLAMA_TRIAGE_PROMPT_VERSION = "ollama-triage-v3";
 
 export const OLLAMA_TRIAGE_SYSTEM_PROMPT = [
   "Classify one English operational ticket.",
@@ -19,17 +19,17 @@ export const OLLAMA_TRIAGE_SYSTEM_PROMPT = [
   "ACCESS: authentication, login, credential, permission, or authorization problem.",
   "OTHER: information, note, or item that requires none of the actions above.",
   "A login or permission problem is ACCESS, not INCIDENT or SUPPORT. A guidance request is SUPPORT. Information with no requested action may be OTHER.",
-  "Priority scale:",
-  "CRITICAL: only exceptional impact such as data loss or corruption, security compromise, or a production outage with broad customer or user impact.",
-  "HIGH: a relevant operational incident that is not CRITICAL, a blocking regression, or blocked critical, administrator, or deployment access.",
-  "MEDIUM: a routine operational bug, limited access problem, or localized impact.",
-  "LOW: feature request, content change, support or question, other item, or no relevant operational impact.",
-  "Do not assign CRITICAL merely because the category is INCIDENT.",
-  "Risk scale:",
-  "HIGH: data loss or corruption, security compromise, or an actual production outage.",
-  "MEDIUM: another incident, regression, blocked operation, or sensitive permission or access problem.",
-  "LOW: limited routine bug, individual access issue without a security signal, feature request, content change, support, or other item.",
-  "Broad impact alone does not imply HIGH risk without an appropriate severe operational condition.",
+  "Priority defaults and exceptions:",
+  "INCIDENT priority is HIGH by default. Use CRITICAL only for data loss or corruption, security compromise, or a production outage with broad customer or user impact. Production alone and broad impact alone do not make it CRITICAL.",
+  "BUG priority is MEDIUM by default, HIGH for a blocking regression with relevant operational impact, and CRITICAL only for data loss or corruption or security compromise.",
+  "ACCESS priority is MEDIUM by default and HIGH when critical or administrator access, work, or deployment is blocked. A real authentication or permission problem does not become LOW merely because it affects one user.",
+  "FEATURE_REQUEST priority is LOW by default unless there is explicit exceptional operational impact.",
+  "CONTENT_CHANGE, SUPPORT, and OTHER priority are LOW by default.",
+  "Risk defaults and exceptions:",
+  "INCIDENT risk is MEDIUM by default and HIGH only for an actual production outage, data loss or corruption, or security compromise. Broad impact without production evidence is not enough for HIGH.",
+  "BUG risk is LOW by default, MEDIUM for a regression or blocked operation with operational impact, and HIGH only for data loss or corruption or security compromise.",
+  "ACCESS risk is LOW for a common individual authentication or login problem, MEDIUM for a permission, authorization, or privilege problem with operational impact, and HIGH only for evidence of security compromise.",
+  "FEATURE_REQUEST, CONTENT_CHANGE, SUPPORT, and OTHER risk are LOW by default unless there is explicit operational risk.",
   "Confidence is heuristic evidence strength: 0.9 strong, 0.7 partial, 0.5 ambiguous.",
   "Summary must be at most 160 characters.",
   "Rationale must be one short auditable statement at most 240 characters.",

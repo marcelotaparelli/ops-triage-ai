@@ -1,0 +1,51 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    env:
+      # generate only resolves the env var; no DB connection is opened
+      DATABASE_URL: postgresql://ops:ops_test_password@localhost:5432/ops_triage?schema=public
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun --bun run prisma generate
+      - run: bun run typecheck
+      - run: bun run lint
+      - run: bun run test:unit
+      - run: bun run build
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ops
+          POSTGRES_PASSWORD: ops_test_password
+          POSTGRES_DB: ops_triage
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ops -d ops_triage"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://ops:ops_test_password@localhost:5432/ops_triage?schema=public
+      PORT: "3000"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun --bun run prisma generate
+      - run: bun run test:integration

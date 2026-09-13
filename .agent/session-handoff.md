@@ -2,10 +2,9 @@
 
 ## Estado final
 
-A FASE 1 — FOUNDATION e a FASE 2 — DETERMINISTIC BASELINE + EVALUATION estão
-concluídas. A implementação pré-integração real da FASE 3 — LLM CLASSIFIER
-COM OLLAMA está concluída e validada pela CI. A integração com o modelo real
-ainda não foi executada.
+As Fases 1 — FOUNDATION, 2 — DETERMINISTIC BASELINE + EVALUATION e 3 — OLLAMA
+LLM CLASSIFIER estão concluídas. O experimento Ollama v3 foi congelado e sua
+avaliação held-out final foi executada uma única vez.
 
 ## Fase 2 implementada
 
@@ -78,14 +77,14 @@ O benchmark held-out está congelado. Ele foi executado uma única vez depois do
 congelamento e não deve ser usado para tuning ou ajuste de regras. A principal
 limitação observada é o recall de HIGH risk no held-out: 0.5714.
 
-## Fase 3 — estado pré-integração real
+## Fase 3 — Ollama LLM Classifier concluída
 
 - `OllamaTriageClassifier` implementa o port `TriageClassifier` como adapter de
   infraestrutura, sem acoplar Domain ou Application ao Ollama.
 - Provider padrão `deterministic`; Ollama exige ativação explícita com
   `TRIAGE_CLASSIFIER=ollama`.
 - Endpoint, modelo e timeout do Ollama são configurados por ambiente.
-- Prompt v1 pequeno e versionado, com tarefa fechada, enums permitidos,
+- Prompt v3 pequeno e versionado, com tarefa fechada, enums permitidos,
   structured output e ticket tratado explicitamente como dado não confiável.
 - Resposta do modelo validada por schema Zod estrito no adapter.
 - Timeout, indisponibilidade e resposta inválida são convertidos nos erros
@@ -93,13 +92,22 @@ limitação observada é o recall de HIGH risk no held-out: 0.5714.
 - Cliente HTTP injetável permite testes unitários sem Ollama real.
 - CLI de evaluation reutiliza `evaluateTriage`; há entrypoint separado para a
   integração real.
-- O modelo candidato é `qwen2.5:7b-instruct-q5_K_S`.
+- Modelo congelado: `qwen2.5:7b-instruct-q5_K_S`, ID `1a3492b0a1dc`, 5.3 GB.
+- Configuração congelada: Ollama 0.34.0, temperature 0 e timeout 120000 ms.
+- Integração real com Ollama e structured output validada.
+- Diagnóstico DEV opcional expõe somente exemplos divergentes sem persistir
+  predições.
 
 ### Commits
 
 - `35a51a4` — feat: add Ollama triage classifier adapter
 - `3cbdcb9` — feat: add Ollama evaluation and integration entrypoints
 - `b9ebdd9` — fix: tighten Ollama prompt and timeout handling
+- `c6be0ed` — fix: derive suggested team from category
+- `bebce67` — feat: add dev evaluation diagnostics
+- `efeaa78` — feat: refine Ollama triage prompt
+- `59ae9e7` — feat: refine Ollama triage taxonomy
+- `a693e1b` — docs: freeze Ollama v3 experiment
 
 ### CI pré-integração real
 
@@ -120,14 +128,37 @@ GitHub Actions run `34781093498` no commit `b9ebdd9`:
   - conexão real ao banco, `GET /health` com HTTP 200 e DB up, e endpoint de
     triagem determinístico
 
-Não foram executados download do modelo, integração real com Ollama,
-`eval:ollama:dev` ou `eval:ollama:heldout`. A baseline, os datasets e o
-benchmark held-out permanecem inalterados.
+### Resultados finais Ollama v3
+
+DEV, 42 exemplos:
+
+- category accuracy: 1.0000
+- category macro-F1: 1.0000
+- priority accuracy: 0.9048
+- risk accuracy: 0.9048
+- recall HIGH/CRITICAL priority: 1.0000
+- recall HIGH risk: 0.7500
+
+Held-out, 70 exemplos, executado uma única vez após o freeze:
+
+| Métrica | Deterministic v1 | Ollama v3 |
+| --- | ---: | ---: |
+| Category accuracy | 0.8286 | 0.9571 |
+| Category macro-F1 | 0.8512 | 0.9550 |
+| Priority accuracy | 0.9000 | 0.9143 |
+| Risk accuracy | 0.9571 | 0.9143 |
+| Recall HIGH/CRITICAL priority | 0.7857 | 1.0000 |
+| Recall HIGH risk | 0.5714 | 0.7143 |
+
+O Ollama v3 melhora fortemente category e os recalls de prioridade grave e
+HIGH risk. A baseline determinística mantém melhor risk accuracy geral;
+nenhuma abordagem domina todas as métricas. O desempenho held-out permaneceu
+próximo do DEV, fornecendo evidência de generalização dentro dos benchmarks
+sintéticos. O held-out não deve ser reexecutado para tuning e seus exemplos
+não foram inspecionados.
 
 ## Próximo marco
 
-Confirmar RAM, espaço em disco e GPU do host que executará o Ollama. Depois,
-baixar o modelo candidato e executar somente a integração real explicitamente
-aprovada. Não executar o held-out antes de congelar prompt, modelo e
-configuração da primeira versão do classifier LLM. Não implementar
-HybridPolicy, persistência ou outras fases.
+Planejar uma fase futura de HybridPolicy usando os trade-offs medidos entre a
+baseline determinística e o Ollama v3. Não implementar HybridPolicy,
+persistência ou outras fases sem planejamento e aprovação explícitos.

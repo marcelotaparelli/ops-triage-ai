@@ -18,7 +18,8 @@ export function startBunServer(port: number, databaseUrl: string): Promise<BunSe
     }, 10_000);
 
     const onStdout = (chunk: Buffer) => {
-      if (chunk.toString().includes("listening on :" + port)) {
+      const output = chunk.toString();
+      if (output.includes(`"event":"server_started"`) && output.includes(`"status":${port}`)) {
         cleanup();
         resolve(server);
       }

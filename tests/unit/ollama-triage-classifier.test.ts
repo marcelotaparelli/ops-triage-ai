@@ -158,6 +158,25 @@ describe("OllamaTriageClassifier", () => {
     await expect(promise).rejects.not.toThrow(/secret-host/);
   });
 
+  it("preserves unexpected errors while reading the response body", async () => {
+    const internalError = new Error("unexpected response implementation failure");
+    const response = new Response("", { status: 200 });
+    Object.defineProperty(response, "json", {
+      value: async () => {
+        throw internalError;
+      },
+    });
+    const fetchImpl: HttpFetch = async () => response;
+
+    const promise = new OllamaTriageClassifier(config, fetchImpl).classify({
+      title: "Ticket",
+      description: "Description",
+    });
+
+    await expect(promise).rejects.toBe(internalError);
+    await expect(promise).rejects.not.toBeInstanceOf(ClassifierUnavailableError);
+  });
+
   it("aborts and reports an explicit timeout", async () => {
     const fetchImpl: HttpFetch = async (_input, init) =>
       new Promise<Response>((_resolve, reject) => {

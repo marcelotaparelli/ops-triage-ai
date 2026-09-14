@@ -44,7 +44,8 @@ export class OllamaTriageClassifier implements TriageClassifier {
     const timeout = setTimeout(() => controller.abort(), this.config.timeoutMs);
 
     try {
-      const response = await this.fetchImpl(this.chatUrl(), {
+      const url = this.chatUrl();
+      const request: RequestInit = {
         method: "POST",
         headers: { "content-type": "application/json" },
         signal: controller.signal,
@@ -58,15 +59,27 @@ export class OllamaTriageClassifier implements TriageClassifier {
           format: OLLAMA_CLASSIFIER_RESULT_JSON_SCHEMA,
           options: { temperature: 0 },
         }),
-      });
+      };
+
+      let response: Response;
+      try {
+        response = await this.fetchImpl(url, request);
+      } catch {
+        if (controller.signal.aborted) throw new ClassifierTimeoutError();
+        throw new ClassifierUnavailableError();
+      }
 
       if (!response.ok) throw new ClassifierUnavailableError();
 
       let envelope: unknown;
       try {
         envelope = await response.json();
-      } catch {
-        throw new ClassifierInvalidResponseError();
+      } catch (error) {
+        if (controller.signal.aborted) throw new ClassifierTimeoutError();
+        if (error instanceof SyntaxError) {
+          throw new ClassifierInvalidResponseError();
+        }
+        throw error;
       }
 
       const parsedEnvelope = OllamaResponseSchema.safeParse(envelope);
@@ -75,8 +88,12 @@ export class OllamaTriageClassifier implements TriageClassifier {
       let content: unknown;
       try {
         content = JSON.parse(parsedEnvelope.data.message.content);
-      } catch {
-        throw new ClassifierInvalidResponseError();
+      } catch (error) {
+        if (controller.signal.aborted) throw new ClassifierTimeoutError();
+        if (error instanceof SyntaxError) {
+          throw new ClassifierInvalidResponseError();
+        }
+        throw error;
       }
 
       const result = OllamaClassifierResultSchema.safeParse(content);
@@ -85,16 +102,6 @@ export class OllamaTriageClassifier implements TriageClassifier {
         ...result.data,
         suggestedTeam: suggestedTeamForCategory(result.data.category),
       };
-    } catch (error) {
-      if (error instanceof ClassifierTimeoutError) throw error;
-      if (controller.signal.aborted) throw new ClassifierTimeoutError();
-      if (
-        error instanceof ClassifierInvalidResponseError ||
-        error instanceof ClassifierUnavailableError
-      ) {
-        throw error;
-      }
-      throw new ClassifierUnavailableError();
     } finally {
       clearTimeout(timeout);
     }

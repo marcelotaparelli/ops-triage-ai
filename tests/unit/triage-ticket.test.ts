@@ -11,6 +11,10 @@ import {
 } from "../../src/application/policies/hybrid-policy.ts";
 import { TriageTicket } from "../../src/application/triage-ticket.ts";
 import {
+  type HttpFetch,
+  OllamaTriageClassifier,
+} from "../../src/infrastructure/ollama/ollama-triage-classifier.ts";
+import {
   DecisionSource,
   HumanReviewReason,
 } from "../../src/domain/triage-decision.ts";
@@ -76,6 +80,35 @@ describe("TriageTicket", () => {
     expect(classifier.received).toEqual(input);
   });
 
+  it.each(["deterministic", "ollama"] as const)(
+    "requires review for confidence 0.5 in %s mode",
+    async (mode) => {
+      const classifier = new FakeClassifier(result({ confidence: 0.5 }));
+      const useCase = new TriageTicket({ mode, classifier });
+
+      await expect(useCase.execute(input)).resolves.toMatchObject({
+        requiresHumanReview: true,
+        reviewReasons: [HumanReviewReason.LOW_CONFIDENCE],
+      });
+    },
+  );
+
+  it.each([
+    ["HIGH priority", { priority: Priority.HIGH }],
+    ["CRITICAL priority", { priority: Priority.CRITICAL }],
+    ["HIGH risk", { risk: Risk.HIGH }],
+  ])("requires review for %s in each isolated mode", async (_signal, overrides) => {
+    for (const mode of ["deterministic", "ollama"] as const) {
+      const classifier = new FakeClassifier(result(overrides));
+      const useCase = new TriageTicket({ mode, classifier });
+
+      await expect(useCase.execute(input)).resolves.toMatchObject({
+        requiresHumanReview: true,
+        reviewReasons: [HumanReviewReason.HIGH_SEVERITY],
+      });
+    }
+  });
+
   it("preserves the complete LLM result in hybrid mode", async () => {
     const llm = result({ summary: "LLM summary", rationale: "LLM rationale" });
     const useCase = new TriageTicket({
@@ -125,5 +158,35 @@ describe("TriageTicket", () => {
       llmClassifier: new FakeClassifier(unexpected),
     });
     await expect(useCase.execute(input)).rejects.toBe(unexpected);
+  });
+
+  it("propagates an unexpected Ollama adapter error without fallback", async () => {
+    const unexpected = new Error("unexpected response implementation failure");
+    const response = new Response("", { status: 200 });
+    Object.defineProperty(response, "json", {
+      value: async () => {
+        throw unexpected;
+      },
+    });
+    const fetchImpl: HttpFetch = async () => response;
+    const policy = new RecordingPolicy();
+    const useCase = new TriageTicket(
+      {
+        mode: "hybrid",
+        deterministicClassifier: new FakeClassifier(result()),
+        llmClassifier: new OllamaTriageClassifier(
+          {
+            baseUrl: "http://ollama.internal:11434",
+            model: "qwen2.5:7b-instruct-q5_K_S",
+            timeoutMs: 1000,
+          },
+          fetchImpl,
+        ),
+      },
+      policy,
+    );
+
+    await expect(useCase.execute(input)).rejects.toBe(unexpected);
+    expect(policy.input).toBeUndefined();
   });
 });

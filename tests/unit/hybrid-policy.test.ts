@@ -110,6 +110,57 @@ describe("HybridPolicy", () => {
     },
   );
 
+  it("keeps deterministic low confidence visible during fallback", () => {
+    const deterministic = result({ confidence: 0.5 });
+    expect(
+      policy.decide({
+        deterministic,
+        llm: { status: "failed", reason: "TIMEOUT" },
+      }),
+    ).toEqual({
+      ...deterministic,
+      requiresHumanReview: true,
+      decisionSource: DecisionSource.DETERMINISTIC_FALLBACK,
+      reviewReasons: [
+        HumanReviewReason.LOW_CONFIDENCE,
+        HumanReviewReason.LLM_UNAVAILABLE,
+      ],
+    });
+  });
+
+  it("keeps deterministic high severity visible during fallback", () => {
+    const deterministic = result({ priority: Priority.HIGH });
+    expect(
+      policy.decide({
+        deterministic,
+        llm: { status: "failed", reason: "UNAVAILABLE" },
+      }),
+    ).toEqual({
+      ...deterministic,
+      requiresHumanReview: true,
+      decisionSource: DecisionSource.DETERMINISTIC_FALLBACK,
+      reviewReasons: [
+        HumanReviewReason.HIGH_SEVERITY,
+        HumanReviewReason.LLM_UNAVAILABLE,
+      ],
+    });
+  });
+
+  it("does not report disagreement when both classifiers agree on high severity", () => {
+    const severe = result({ priority: Priority.CRITICAL, risk: Risk.HIGH });
+    expect(
+      policy.decide({
+        deterministic: severe,
+        llm: { status: "available", result: severe },
+      }),
+    ).toEqual({
+      ...severe,
+      requiresHumanReview: true,
+      decisionSource: DecisionSource.HYBRID,
+      reviewReasons: [HumanReviewReason.HIGH_SEVERITY],
+    });
+  });
+
   it.each([
     DecisionSource.DETERMINISTIC,
     DecisionSource.LLM,

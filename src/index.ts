@@ -1,7 +1,14 @@
 import { loadConfig } from "./config.ts";
 import { DeterministicTriageClassifier } from "./application/classifiers/deterministic-triage-classifier.ts";
+import { PersistedTriageService } from "./application/persisted-triage-service.ts";
 import { TriageTicket } from "./application/triage-ticket.ts";
+import type { TriageMode } from "./application/ports/triage-persistence.ts";
 import { OllamaTriageClassifier } from "./infrastructure/ollama/ollama-triage-classifier.ts";
+import {
+  PrismaFeedbackRepository,
+  PrismaTriageRunRepository,
+} from "./infrastructure/persistence/prisma-triage-repositories.ts";
+import { getPrisma } from "./db.ts";
 import { startServer } from "./server.ts";
 
 const config = loadConfig();
@@ -18,7 +25,14 @@ const triageTicket =
               llmClassifier: createOllamaClassifier(),
             },
       );
-const server = startServer(config.PORT, config.DATABASE_URL, triageTicket);
+const prisma = getPrisma(config.DATABASE_URL);
+const triageService = new PersistedTriageService(
+  triageTicket,
+  toTriageMode(config.TRIAGE_CLASSIFIER),
+  new PrismaTriageRunRepository(prisma),
+  new PrismaFeedbackRepository(prisma),
+);
+const server = startServer(config.PORT, config.DATABASE_URL, triageService);
 console.log(`ops-triage-ai listening on :${server.port}`);
 
 function createOllamaClassifier(): OllamaTriageClassifier {
@@ -30,4 +44,8 @@ function createOllamaClassifier(): OllamaTriageClassifier {
     model: config.OLLAMA_MODEL,
     timeoutMs: config.OLLAMA_TIMEOUT_MS,
   });
+}
+
+function toTriageMode(value: "deterministic" | "ollama" | "hybrid"): TriageMode {
+  return value.toUpperCase() as TriageMode;
 }

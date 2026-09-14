@@ -86,8 +86,14 @@ export async function handleRequest(
   }
 
   const triagePath = /^\/triage\/([^/]+)$/.exec(url.pathname);
-  if (triagePath && (req.method === "GET" || req.method === "POST")) {
-    const decisionId = triagePath[1] ?? "";
+  const feedbackPath = /^\/triage\/([^/]+)\/feedback$/.exec(url.pathname);
+  const pathMatch = req.method === "GET"
+    ? triagePath
+    : req.method === "POST"
+      ? feedbackPath
+      : null;
+  if (pathMatch) {
+    const decisionId = pathMatch[1] ?? "";
     if (!isUuid(decisionId)) return json(400, { error: "invalid_triage_id" });
 
     if (req.method === "GET") {

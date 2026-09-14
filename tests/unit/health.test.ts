@@ -1,13 +1,21 @@
 import { describe, expect, it } from "vitest";
 import { DeterministicTriageClassifier } from "../../src/application/classifiers/deterministic-triage-classifier.ts";
 import { TriageTicket } from "../../src/application/triage-ticket.ts";
+import type { TriageService } from "../../src/application/ports/triage-service.ts";
 import { handleRequest } from "../../src/server.ts";
 
 const triageTicket = new TriageTicket({
   mode: "deterministic",
   classifier: new DeterministicTriageClassifier(),
 });
-const dependencies = (checkDb: () => Promise<boolean>) => ({ checkDb, triageTicket });
+const triageService: TriageService = {
+  execute: async (input) => ({ decisionId: crypto.randomUUID(), decision: await triageTicket.execute(input) }),
+  getDecisionAudit: async () => null,
+  addFeedback: async () => {
+    throw new Error("not used in health tests");
+  },
+};
+const dependencies = (checkDb: () => Promise<boolean>) => ({ checkDb, triageService });
 
 describe("GET /health", () => {
   it("returns 200 healthy when DB is up", async () => {

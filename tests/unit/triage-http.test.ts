@@ -6,13 +6,25 @@ import {
   ClassifierUnavailableError,
 } from "../../src/application/errors/classifier-errors.ts";
 import type { TriageClassifier } from "../../src/application/ports/triage-classifier.ts";
+import type { TriageService } from "../../src/application/ports/triage-service.ts";
 import { TriageTicket } from "../../src/application/triage-ticket.ts";
 import { handleRequest, type ServerDependencies } from "../../src/server.ts";
 
 function dependencies(classifier: TriageClassifier = new DeterministicTriageClassifier()) {
+  const triageTicket = new TriageTicket({ mode: "deterministic", classifier });
+  const triageService: TriageService = {
+    execute: async (input) => ({
+      decisionId: "00000000-0000-4000-8000-000000000001",
+      decision: await triageTicket.execute(input),
+    }),
+    getDecisionAudit: async () => null,
+    addFeedback: async () => {
+      throw new Error("not used in triage HTTP tests");
+    },
+  };
   return {
     checkDb: async () => true,
-    triageTicket: new TriageTicket({ mode: "deterministic", classifier }),
+    triageService,
   } satisfies ServerDependencies;
 }
 
@@ -37,8 +49,9 @@ describe("POST /tickets/triage", () => {
       dependencies(),
     );
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(await res.json()).toEqual({
+      id: "00000000-0000-4000-8000-000000000001",
       category: "FEATURE_REQUEST",
       priority: "LOW",
       risk: "LOW",
@@ -60,11 +73,20 @@ describe("POST /tickets/triage", () => {
     };
     const hybridDependencies = {
       checkDb: async () => true,
-      triageTicket: new TriageTicket({
-        mode: "hybrid",
-        deterministicClassifier: deterministic,
-        llmClassifier: llm,
-      }),
+      triageService: {
+        execute: async (input: { title: string; description: string }) => ({
+          decisionId: "00000000-0000-4000-8000-000000000002",
+          decision: await new TriageTicket({
+            mode: "hybrid",
+            deterministicClassifier: deterministic,
+            llmClassifier: llm,
+          }).execute(input),
+        }),
+        getDecisionAudit: async () => null,
+        addFeedback: async () => {
+          throw new Error("not used in hybrid HTTP test");
+        },
+      } satisfies TriageService,
     } satisfies ServerDependencies;
 
     const res = await handleRequest(
@@ -72,7 +94,7 @@ describe("POST /tickets/triage", () => {
       hybridDependencies,
     );
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(await res.json()).toMatchObject({
       category: "SUPPORT",
       priority: "LOW",

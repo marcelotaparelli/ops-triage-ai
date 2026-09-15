@@ -7,13 +7,14 @@ import {
 
 export type TriageMode = "DETERMINISTIC" | "OLLAMA" | "HYBRID";
 
-export type TriageRunStatus = "RUNNING" | "SUCCEEDED" | "FAILED";
+export type TriageRunStatus = "RUNNING" | "SUCCEEDED" | "FAILED" | "ABANDONED";
 
 export type TriageFailureCode =
   | "TIMEOUT"
   | "UNAVAILABLE"
   | "INVALID_RESPONSE"
-  | "UNEXPECTED";
+  | "UNEXPECTED"
+  | "ABANDONED";
 
 export interface StartTriageRun {
   ticketId: string;
@@ -88,6 +89,8 @@ export interface TriageRunRepository {
   start(input: StartTriageRun): Promise<void>;
   complete(input: CompleteTriageRun): Promise<void>;
   fail(input: FailTriageRun): Promise<void>;
+  reconcileStaleRuns?(cutoff: Date): Promise<number>;
+  getStatusCounts?(): Promise<Record<TriageRunStatus, number>>;
   findDecisionAudit(decisionId: string): Promise<TriageAuditRecord | null>;
 }
 

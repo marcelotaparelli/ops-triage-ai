@@ -77,6 +77,23 @@ export class PrismaTriageRunRepository implements TriageRunRepository {
     });
   }
 
+  async reconcileStaleRuns(cutoff: Date): Promise<number> {
+    const result = await this.prisma.triageRun.updateMany({
+      where: { status: "RUNNING", startedAt: { lt: cutoff } },
+      data: { status: "ABANDONED", failureCode: "ABANDONED", completedAt: new Date() },
+    });
+    return result.count;
+  }
+
+  async getStatusCounts(): Promise<Record<TriageRunStatus, number>> {
+    const statuses: TriageRunStatus[] = ["RUNNING", "SUCCEEDED", "FAILED", "ABANDONED"];
+    const entries = await Promise.all(statuses.map(async (status) => [
+      status,
+      await this.prisma.triageRun.count({ where: { status } }),
+    ] as const));
+    return Object.fromEntries(entries) as Record<TriageRunStatus, number>;
+  }
+
   async findDecisionAudit(decisionId: string): Promise<TriageAuditRecord | null> {
     const row = await this.prisma.triageDecision.findUnique({
       where: { id: decisionId },
@@ -233,7 +250,7 @@ function toTriageMode(value: string): TriageMode {
 }
 
 function toTriageRunStatus(value: string): TriageRunStatus {
-  if (value === "RUNNING" || value === "SUCCEEDED" || value === "FAILED") return value;
+  if (value === "RUNNING" || value === "SUCCEEDED" || value === "FAILED" || value === "ABANDONED") return value;
   throw new Error(`Unexpected persisted triage run status: ${value}`);
 }
 
@@ -242,7 +259,8 @@ function toTriageFailureCode(value: string): TriageFailureCode {
     value === "TIMEOUT" ||
     value === "UNAVAILABLE" ||
     value === "INVALID_RESPONSE" ||
-    value === "UNEXPECTED"
+    value === "UNEXPECTED" ||
+    value === "ABANDONED"
   ) {
     return value;
   }

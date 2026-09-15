@@ -22,6 +22,7 @@ enum TriageRunStatus {
   RUNNING
   SUCCEEDED
   FAILED
+  ABANDONED
 }
 
 enum TriageFailureCode {
@@ -29,6 +30,7 @@ enum TriageFailureCode {
   UNAVAILABLE
   INVALID_RESPONSE
   UNEXPECTED
+  ABANDONED
 }
 
 enum Category {

@@ -1,0 +1,2 @@
+ALTER TYPE "TriageRunStatus" ADD VALUE 'ABANDONED';
+ALTER TYPE "TriageFailureCode" ADD VALUE 'ABANDONED';

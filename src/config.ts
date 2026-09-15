@@ -9,6 +9,12 @@ const BaseConfigSchema = z.object({
       (v) => v.startsWith("postgresql://") || v.startsWith("postgres://"),
       "DATABASE_URL must be a postgresql connection string",
     ),
+  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  TRIAGE_API_KEY: z.string().trim().min(1).optional(),
+  HTTP_BODY_LIMIT_BYTES: z.coerce.number().int().min(1_024).max(10_000_000).default(32_768),
+  TRIAGE_MAX_CONCURRENCY: z.coerce.number().int().min(1).max(1_000).default(8),
+  REQUEST_TIMEOUT_MS: z.coerce.number().int().min(100).max(600_000).default(310_000),
+  STALE_RUN_THRESHOLD_MS: z.coerce.number().int().min(1_000).max(86_400_000).default(600_000),
 });
 
 const OllamaSettingsSchema = z.object({
@@ -45,9 +51,18 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     OLLAMA_BASE_URL: env["OLLAMA_BASE_URL"],
     OLLAMA_MODEL: env["OLLAMA_MODEL"],
     OLLAMA_TIMEOUT_MS: env["OLLAMA_TIMEOUT_MS"],
+    NODE_ENV: env["NODE_ENV"] ?? "development",
+    TRIAGE_API_KEY: env["TRIAGE_API_KEY"],
+    HTTP_BODY_LIMIT_BYTES: env["HTTP_BODY_LIMIT_BYTES"],
+    TRIAGE_MAX_CONCURRENCY: env["TRIAGE_MAX_CONCURRENCY"],
+    REQUEST_TIMEOUT_MS: env["REQUEST_TIMEOUT_MS"],
+    STALE_RUN_THRESHOLD_MS: env["STALE_RUN_THRESHOLD_MS"],
   });
   if (!parsed.success) {
     throw configurationError(parsed.error);
+  }
+  if (parsed.data.NODE_ENV === "production" && !parsed.data.TRIAGE_API_KEY) {
+    throw new Error("Invalid configuration: TRIAGE_API_KEY is required in production");
   }
   return parsed.data;
 }

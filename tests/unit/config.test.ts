@@ -124,6 +124,20 @@ describe("config", () => {
     expect(() => loadConfig({ PORT: "3000" })).toThrow(/DATABASE_URL/);
   });
 
+  it("requires an API key in production", () => {
+    expect(() => loadConfig({
+      PORT: "3000",
+      DATABASE_URL: "postgresql://x@y/z",
+      NODE_ENV: "production",
+    })).toThrow(/TRIAGE_API_KEY/);
+    expect(loadConfig({
+      PORT: "3000",
+      DATABASE_URL: "postgresql://x@y/z",
+      NODE_ENV: "production",
+      TRIAGE_API_KEY: "production-secret",
+    }).TRIAGE_API_KEY).toBe("production-secret");
+  });
+
   it("fails fast on invalid PORT", () => {
     expect(() =>
       loadConfig({ PORT: "abc", DATABASE_URL: "postgresql://x@y/z" }),

@@ -49,4 +49,5 @@ jobs:
           bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun --bun run prisma generate
+      - run: bunx prisma migrate deploy
       - run: bun run test:integration

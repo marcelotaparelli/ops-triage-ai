@@ -4,6 +4,9 @@ Applied AI case study: a deterministic classifier and a local LLM are combined
 behind a hybrid policy for operational ticket triage. The service persists
 tickets, runs, decisions, and append-only human feedback in PostgreSQL.
 
+The public case is available in [PT-BR](docs/portfolio-case-pt-br.md) and
+[English](docs/portfolio-case-en.md).
+
 ## Quickstart
 
 ```bash
@@ -56,14 +59,27 @@ frozen. See [the Phase 7 methodology](docs/evaluation/phase7-methodology.md).
 ## Architecture and boundaries
 
 ```text
-HTTP -> request parsing/security -> TriageService -> TriageTicket
-                                      -> classifiers -> HybridPolicy
-       persistence/audit trail <- PostgreSQL
+HTTP -> validation/security -> PersistedTriageService -> TriageTicket
+                                  -> deterministic + Ollama classifiers
+                                  -> HybridPolicy -> TriageDecision
+       Prisma/PostgreSQL <- run state, decision and append-only feedback
 ```
+
+`PersistedTriageService` orchestrates persisted lifecycle, IDs, run states and
+repositories. `TriageTicket` orchestrates the classifiers and `HybridPolicy`.
 
 The runtime has request correlation, structured redacted logs, in-memory
 metrics, readiness, graceful shutdown, and stale-run reconciliation. The
 evaluator is separate from the HTTP entrypoint and audit validation is pure.
+
+## Evaluation evidence
+
+- [Architecture notes](docs/architecture/hybrid-policy.md)
+- [Phase 7 methodology](docs/evaluation/phase7-methodology.md)
+- [Official held-out report](docs/evaluation/official-held-out-f36e8ef.md)
+- [Official held-out artifact](artifacts/official-held-out-f36e8ef.json)
+- [PT-BR portfolio case](docs/portfolio-case-pt-br.md)
+- [English portfolio case](docs/portfolio-case-en.md)
 
 Known limitations include local-model variability, in-memory metrics lost on
 restart, and declared rather than federated human reviewer identity. This is

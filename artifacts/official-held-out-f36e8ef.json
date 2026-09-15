@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "dataset": "datasets/triage-eval.jsonl",
+    "classifierMode": "HYBRID",
+    "model": "qwen2.5:7b-instruct-q5_K_S",
+    "timeoutMs": 120000,
+    "generatedAt": "2026-09-15T01:50:48.287Z",
+    "commit": "f36e8ef8fcc70be09ab5ba9883efc7c34f3591a2",
+    "promptVersion": "ollama-triage-v3"
+  },
+  "baseline": {
+    "examples": 70,
+    "metrics": {
+      "categoryAccuracy": 0.8286,
+      "categoryMacroF1": 0.8512,
+      "priorityAccuracy": 0.9,
+      "riskAccuracy": 0.9571,
+      "highCriticalPriorityRecall": 0.7857,
+      "highRiskRecall": 0.5714
+    }
+  },
+  "llm": {
+    "examples": 70,
+    "metrics": {
+      "categoryAccuracy": 0.9571,
+      "categoryMacroF1": 0.955,
+      "priorityAccuracy": 0.9143,
+      "riskAccuracy": 0.9143,
+      "highCriticalPriorityRecall": 1,
+      "highRiskRecall": 0.7143
+    }
+  },
+  "hybrid": {
+    "examples": 70,
+    "categoryAccuracy": 0.9571,
+    "priorityAccuracy": 0.9143,
+    "riskAccuracy": 0.9143,
+    "exactTupleAccuracy": 0.8286,
+    "highCriticalPriorityRecall": 1,
+    "highRiskRecall": 0.7143,
+    "reviewRate": 0.5143,
+    "decisionSources": {
+      "HYBRID": 70
+    },
+    "reviewReasons": {
+      "HIGH_SEVERITY": 14,
+      "CLASSIFIER_DISAGREEMENT": 23,
+      "LOW_CONFIDENCE": 22
+    },
+    "fallbackRate": 0,
+    "llmFailures": {},
+    "disagreementRate": 0.3286,
+    "latencyMs": {
+      "p50": 6257.7313,
+      "p95": 7078.5636,
+      "max": 7556.8916
+    }
+  }
+}

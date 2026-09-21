@@ -6,5 +6,5 @@ coverage/
 *.local
 src/generated/
 
-# backup histórico da sessão anterior quebrada — nunca versionar
-.agent/session-broken-backup.json
+# Local agent operational memory — never version
+.agent/

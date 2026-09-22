@@ -1,5 +1,9 @@
 # Jev 1.13 experimental evaluation protocol
 
+The [completed one-run held-out report](jev-1.13-held-out-4c41e0b.md) records
+the results. The status below is the protocol snapshot taken after DEV and
+before the held-out call; the frozen questions and metrics were not changed.
+
 Status on 2026-09-22: three real DEV smoke calls completed successfully.
 Held-out executions: 0 at the time of this protocol revision. The configuration
 is ready to freeze; no held-out result or architectural decision exists yet.

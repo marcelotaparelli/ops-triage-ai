@@ -1,9 +1,8 @@
-# Jev 1.13 experimental evaluation — preparation, not results
+# Jev 1.13 experimental evaluation protocol
 
-Status on 2026-09-22: implementation and offline validation only.
-`OPENROUTER_API_KEY` is absent from the execution environment. Real DEV calls: 0.
-Held-out executions: 0. Configuration is a candidate, **not frozen**. There is
-no freeze commit, no Jev quality/latency/cost result, and no architectural decision.
+Status on 2026-09-22: three real DEV smoke calls completed successfully.
+Held-out executions: 0 at the time of this protocol revision. The configuration
+is ready to freeze; no held-out result or architectural decision exists yet.
 README remains unchanged until actual results exist.
 
 ## Offline validation completed
@@ -16,7 +15,8 @@ mocked fetch, including independent confidence/probability preservation,
 timeout during fetch/body reading, errors, malformed distributions, secret
 sanitization, billing metadata, historical metric parity and exclusive run
 reservation. The CLI also refused a DEV invocation without `--allow-paid`.
-No live Ollama or Jev model test was run. `git diff --check` passed.
+The later live DEV smoke was separate from this offline suite. No live Ollama
+model test was run. `git diff --check` passed.
 
 ## API and boundary
 
@@ -78,8 +78,14 @@ Available DEV data:
 
 The bounded smoke selects `dev-incident-01`, `dev-access-01`, and
 `dev-support-01` from triage DEV. It proves integration, not general quality.
-It stops at the first integration failure. No live calls occurred in this
-preparation. Mocked unit tests never consume API credits.
+It stops at the first integration failure. All three real calls validated against
+the current schema. Each response reported provider `TypeSafe`, resolved model
+`typesafe/jev-1.13-20260917`, complete choice distributions, confidence, input
+tokens and cost. All three tuples matched DEV labels; this tiny smoke is not
+a quality estimate. Observed latency was 537.7–883.7 ms; total reported input
+usage was 3,869 tokens and reported cost was USD 0.000162498. The durable DEV
+artifact is `artifacts/jev-1.13-dev-739e6d731cd0.json`. Mocked unit tests never
+consume API credits.
 
 ## Execution and freeze procedure
 
@@ -126,7 +132,7 @@ Planned new outputs:
 - `artifacts/jev-1.13-held-out-<freeze-commit>.json`
 - `docs/evaluation/jev-1.13-held-out-<freeze-commit>.md` (after real results)
 
-No output above is presented as completed in this preparation. Official
+Only the DEV artifact exists at this protocol revision. Official
 `official-held-out-f36e8ef` files and all datasets remain untouched.
 
 ## Predeclared analysis

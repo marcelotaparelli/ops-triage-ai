@@ -7,92 +7,337 @@ import { analyzeJev, type JevRow } from "../src/evaluation/jev/analysis.ts";
 import { JEV_CONFIG, JEV_QUESTIONS } from "../src/evaluation/jev/questions.ts";
 import { parseTriageDataset } from "../src/evaluation/triage-dataset.ts";
 import { reserveJevRun } from "../src/evaluation/jev/cost-guard.ts";
+import type { EvaluationExample } from "../src/evaluation/evaluate-triage.ts";
 
-const hash = (s: string) => createHash("sha256").update(s).digest("hex");
-const git = (...args: string[]) => execFileSync("git", args, { encoding: "utf8" }).trim();
-const configuration = { ...JEV_CONFIG, questions: JEV_QUESTIONS,
-  runtime: { bun: Bun.version, platform: process.platform, arch: process.arch },
-  smokeIds: ["dev-incident-01", "dev-access-01", "dev-support-01"],
-  metricsVersion: "jev-analysis-v1", thresholds: [0, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99],
-  failurePolicy: "all attempts denominator; no fallback; no retry", latency: "performance.now; nearest rank", };
-function sourceHash(): string {
-  const walk = (dir: string): string[] => readdirSync(dir, { withFileTypes: true })
-    .flatMap(e => e.isDirectory() ? (e.name === "generated" ? [] : walk(join(dir, e.name))) : [join(dir, e.name)]);
-  return hash([...walk("src"), ...walk("scripts"), ...walk("tests"), "package.json", "bun.lock", "tsconfig.json"]
-    .sort().map(p => `${p}\n${readFileSync(p, "utf8")}`).join("\n"));
+type JevMode = "dev" | "freeze" | "heldout";
+
+const FREEZE_PATH = "artifacts/jev-1.13-freeze.json";
+const JOURNAL_PATH = "artifacts/jev-1.13-held-out-attempts.jsonl";
+const DEV_DATASET_PATH = "datasets/triage-dev.jsonl";
+const HELDOUT_DATASET_PATH = "datasets/triage-eval.jsonl";
+const EXPECTED_HELDOUT_EXAMPLES = 70;
+const PLANNED_HELDOUT_CALLS = 70;
+const PLANNED_RUNS = 1;
+
+function sha256Hex(content: string): string {
+  return createHash("sha256").update(content).digest("hex");
 }
-const freezePath = "artifacts/jev-1.13-freeze.json";
-const journalPath = "artifacts/jev-1.13-held-out-attempts.jsonl";
-const json = (v: unknown) => JSON.stringify(v, null, 2) + "\n";
 
-async function main() {
-  const mode = process.argv[2];
-  if (!["dev", "freeze", "heldout"].includes(mode ?? "")) throw new Error("Usage: bun scripts/evaluate-jev.ts dev|freeze|heldout --allow-paid");
-  const commit = git("rev-parse", "HEAD");
-  const fingerprint = sourceHash();
-  const smokePath = `artifacts/jev-1.13-dev-${fingerprint.slice(0, 12)}.json`;
-  if (mode === "freeze") {
-    if (git("status", "--porcelain")) throw new Error("Commit reviewed code and DEV smoke before freeze");
-    const smoke = JSON.parse(readFileSync(smokePath, "utf8"));
-    if (smoke.sourceHash !== fingerprint || smoke.analysis?.failures !== 0 || smoke.rows?.length !== 3 ||
-      JSON.stringify(smoke.configuration) !== JSON.stringify(configuration)) throw new Error("Three successful DEV calls with current sources required");
-    writeFileSync(freezePath, json({ configuration, codeCommit: commit, sourceHash: fingerprint,
-      frozenAt: new Date().toISOString(), smokePath, smokeHash: hash(readFileSync(smokePath, "utf8")),
-      datasetHash: hash(readFileSync("datasets/triage-eval.jsonl", "utf8")),
-      plannedHeldoutCalls: 70, plannedRuns: 1 }), { flag: "wx" });
-    console.log("Freeze recorded. Commit the manifest before heldout.");
-    return;
+function runGit(...args: string[]): string {
+  return execFileSync("git", args, { encoding: "utf8" }).trim();
+}
+
+function toPrettyJson(value: unknown): string {
+  return JSON.stringify(value, null, 2) + "\n";
+}
+
+function buildConfiguration() {
+  return {
+    ...JEV_CONFIG,
+    questions: JEV_QUESTIONS,
+    runtime: { bun: Bun.version, platform: process.platform, arch: process.arch },
+    smokeIds: ["dev-incident-01", "dev-access-01", "dev-support-01"],
+    metricsVersion: "jev-analysis-v1",
+    thresholds: [0, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99],
+    failurePolicy: "all attempts denominator; no fallback; no retry",
+    latency: "performance.now; nearest rank",
+  };
+}
+
+const configuration = buildConfiguration();
+
+function collectSourceFiles(directory: string): string[] {
+  const entries = readdirSync(directory, { withFileTypes: true });
+  const files: string[] = [];
+  for (const entry of entries) {
+    const fullPath = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name !== "generated") {
+        files.push(...collectSourceFiles(fullPath));
+      }
+    } else {
+      files.push(fullPath);
+    }
   }
-  if (process.argv[3] !== "--allow-paid") throw new Error("Paid calls require --allow-paid");
-  const key = process.env["OPENROUTER_API_KEY"];
-  if (!key) throw new Error("OPENROUTER_API_KEY is required");
-  let freeze: Record<string, unknown> | undefined;
-  const datasetPath = mode === "dev" ? "datasets/triage-dev.jsonl" : "datasets/triage-eval.jsonl";
-  if (mode === "heldout") {
-    if (git("status", "--porcelain")) throw new Error("Clean committed tree required");
-    freeze = JSON.parse(readFileSync(freezePath, "utf8")) as Record<string, unknown>;
-    if (freeze["sourceHash"] !== fingerprint || JSON.stringify(freeze["configuration"]) !== JSON.stringify(configuration) ||
-      freeze["datasetHash"] !== hash(readFileSync(datasetPath, "utf8")) ||
-      freeze["smokeHash"] !== hash(readFileSync(smokePath, "utf8"))) throw new Error("Freeze mismatch");
-    git("merge-base", "--is-ancestor", String(freeze["codeCommit"]), commit);
-  } else if (existsSync(freezePath)) throw new Error("DEV calls disabled after freeze");
+  return files;
+}
+
+function computeSourceHash(): string {
+  const trackedFiles = [
+    ...collectSourceFiles("src"),
+    ...collectSourceFiles("scripts"),
+    ...collectSourceFiles("tests"),
+    "package.json",
+    "bun.lock",
+    "tsconfig.json",
+  ];
+  const hashedContent = trackedFiles
+    .sort()
+    .map((path) => `${path}\n${readFileSync(path, "utf8")}`)
+    .join("\n");
+  return sha256Hex(hashedContent);
+}
+
+function hashFile(path: string): string {
+  return sha256Hex(readFileSync(path, "utf8"));
+}
+
+function parseMode(rawMode: string | undefined): JevMode {
+  if (rawMode === "dev" || rawMode === "freeze" || rawMode === "heldout") {
+    return rawMode;
+  }
+  throw new Error("Usage: bun scripts/evaluate-jev.ts dev|freeze|heldout --allow-paid");
+}
+
+function requirePaidFlag(): void {
+  if (process.argv[3] !== "--allow-paid") {
+    throw new Error("Paid calls require --allow-paid");
+  }
+}
+
+function requireApiKey(): string {
+  const apiKey = process.env["OPENROUTER_API_KEY"];
+  if (!apiKey) {
+    throw new Error("OPENROUTER_API_KEY is required");
+  }
+  return apiKey;
+}
+
+function requireCleanTree(): void {
+  if (runGit("status", "--porcelain")) {
+    throw new Error("Clean committed tree required");
+  }
+}
+
+function readJsonFile(path: string): Record<string, unknown> {
+  return JSON.parse(readFileSync(path, "utf8")) as Record<string, unknown>;
+}
+
+function devArtifactPath(sourceHash: string): string {
+  return `artifacts/jev-1.13-dev-${sourceHash.slice(0, 12)}.json`;
+}
+
+function heldoutArtifactPath(commit: string): string {
+  return `artifacts/jev-1.13-held-out-${commit.slice(0, 7)}.json`;
+}
+
+function runFreeze(commit: string, sourceHash: string): void {
+  if (runGit("status", "--porcelain")) {
+    throw new Error("Commit reviewed code and DEV smoke before freeze");
+  }
+  const smokePath = devArtifactPath(sourceHash);
+  const smoke = readJsonFile(smokePath);
+  const smokeIsValid =
+    smoke["sourceHash"] === sourceHash &&
+    (smoke["analysis"] as { failures?: number } | undefined)?.failures === 0 &&
+    (smoke["rows"] as unknown[] | undefined)?.length === 3 &&
+    JSON.stringify(smoke["configuration"]) === JSON.stringify(configuration);
+  if (!smokeIsValid) {
+    throw new Error("Three successful DEV calls with current sources required");
+  }
+  writeFileSync(
+    FREEZE_PATH,
+    toPrettyJson({
+      configuration,
+      codeCommit: commit,
+      sourceHash,
+      frozenAt: new Date().toISOString(),
+      smokePath,
+      smokeHash: hashFile(smokePath),
+      datasetHash: hashFile(HELDOUT_DATASET_PATH),
+      plannedHeldoutCalls: PLANNED_HELDOUT_CALLS,
+      plannedRuns: PLANNED_RUNS,
+    }),
+    { flag: "wx" },
+  );
+  console.log("Freeze recorded. Commit the manifest before heldout.");
+}
+
+function readFreezeManifest(expectedSourceHash: string, smokePath: string): Record<string, unknown> {
+  const freeze = readJsonFile(FREEZE_PATH);
+  const matchesFreeze =
+    freeze["sourceHash"] === expectedSourceHash &&
+    JSON.stringify(freeze["configuration"]) === JSON.stringify(configuration) &&
+    freeze["datasetHash"] === hashFile(HELDOUT_DATASET_PATH) &&
+    freeze["smokeHash"] === hashFile(smokePath);
+  if (!matchesFreeze) {
+    throw new Error("Freeze mismatch");
+  }
+  return freeze;
+}
+
+function selectExamples(mode: "dev" | "heldout", datasetPath: string): EvaluationExample[] {
   const examples = parseTriageDataset(readFileSync(datasetPath, "utf8"));
-  if (mode === "heldout" && examples.length !== 70) throw new Error("Expected 70 frozen examples");
-  const selected = mode === "dev" ? configuration.smokeIds.map(id => {
-    const example = examples.find(e => e.id === id);
-    if (!example) throw new Error("DEV smoke example missing");
+  if (mode === "heldout") {
+    if (examples.length !== EXPECTED_HELDOUT_EXAMPLES) {
+      throw new Error("Expected 70 frozen examples");
+    }
+    return examples;
+  }
+  return configuration.smokeIds.map((id) => {
+    const example = examples.find((candidate) => candidate.id === id);
+    if (!example) {
+      throw new Error("DEV smoke example missing");
+    }
     return example;
-  }) : examples;
-  const output = mode === "dev" ? smokePath : `artifacts/jev-1.13-held-out-${commit.slice(0, 7)}.json`;
+  });
+}
+
+async function evaluateSingleExample(
+  adapter: JevEvaluationAdapter,
+  example: EvaluationExample,
+): Promise<JevRow> {
+  const startedAt = performance.now();
+  try {
+    const result = await adapter.decide(example.input);
+    return { id: example.id, expected: example.expected, result, latencyMs: performance.now() - startedAt };
+  } catch (error) {
+    // Error causes may contain authorization headers; deliberately do not retain them.
+    if (!(error instanceof JevError)) {
+      // eslint-disable-next-line preserve-caught-error
+      throw new Error("Unexpected evaluation failure; inspect local code before any further calls");
+    }
+    const failure: NonNullable<JevRow["failure"]> = { code: error.code };
+    if (error.status !== undefined) {
+      failure.status = error.status;
+    }
+    if (error.usage !== undefined) {
+      failure.usage = error.usage;
+    }
+    return { id: example.id, expected: example.expected, latencyMs: performance.now() - startedAt, failure };
+  }
+}
+
+function writeProgressArtifact(options: {
+  outputPath: string;
+  commit: string;
+  startedAt: string;
+  sourceHash: string;
+  datasetPath: string;
+  freeze: Record<string, unknown> | undefined;
+  rows: JevRow[];
+  totalExamples: number;
+}): void {
+  const status = options.rows.length === options.totalExamples ? "complete" : "running";
+  writeFileSync(
+    options.outputPath,
+    toPrettyJson({
+      status,
+      commit: options.commit,
+      startedAt: options.startedAt,
+      updatedAt: new Date().toISOString(),
+      configuration,
+      sourceHash: options.sourceHash,
+      datasetPath: options.datasetPath,
+      datasetHash: hashFile(options.datasetPath),
+      freeze: options.freeze,
+      rows: options.rows,
+      analysis: analyzeJev(options.rows),
+    }),
+  );
+}
+
+async function runPaidEvaluation(options: {
+  mode: "dev" | "heldout";
+  commit: string;
+  sourceHash: string;
+  outputPath: string;
+  datasetPath: string;
+  freeze: Record<string, unknown> | undefined;
+  apiKey: string;
+}): Promise<void> {
+  const examples = selectExamples(options.mode, options.datasetPath);
   const startedAt = new Date().toISOString();
   // Exclusive durable ledger is created BEFORE any paid request. Never delete to retry silently.
-  if (mode === "heldout") reserveJevRun(journalPath, { event: "run_started", commit, startedAt });
-  reserveJevRun(output, { status: "running", commit, startedAt });
+  if (options.mode === "heldout") {
+    reserveJevRun(JOURNAL_PATH, { event: "run_started", commit: options.commit, startedAt });
+  }
+  reserveJevRun(options.outputPath, { status: "running", commit: options.commit, startedAt });
+
   const rows: JevRow[] = [];
-  const adapter = new JevEvaluationAdapter(key);
-  for (const example of selected) {
-    if (mode === "heldout") appendFileSync(journalPath, JSON.stringify({ event: "attempt_started", id: example.id, at: new Date().toISOString() }) + "\n");
-    const start = performance.now();
-    let row: JevRow;
-    try {
-      const result = await adapter.decide(example.input);
-      row = { id: example.id, expected: example.expected, result, latencyMs: performance.now() - start };
-    } catch (error) {
-      // Error causes may contain authorization headers; deliberately do not retain them.
-      // eslint-disable-next-line preserve-caught-error
-      if (!(error instanceof JevError)) throw new Error("Unexpected evaluation failure; inspect local code before any further calls");
-      row = { id: example.id, expected: example.expected, latencyMs: performance.now() - start,
-        failure: { code: error.code, ...(error.status === undefined ? {} : { status: error.status }),
-          ...(error.usage === undefined ? {} : { usage: error.usage }) } };
+  const adapter = new JevEvaluationAdapter(options.apiKey);
+  for (const example of examples) {
+    if (options.mode === "heldout") {
+      appendFileSync(
+        JOURNAL_PATH,
+        JSON.stringify({ event: "attempt_started", id: example.id, at: new Date().toISOString() }) + "\n",
+      );
     }
+    const row = await evaluateSingleExample(adapter, example);
     rows.push(row);
-    if (mode === "heldout") appendFileSync(journalPath, JSON.stringify({ event: "attempt_finished", row }) + "\n");
-    writeFileSync(output, json({ status: rows.length === selected.length ? "complete" : "running", commit,
-      startedAt, updatedAt: new Date().toISOString(), configuration, sourceHash: fingerprint,
-      datasetPath, datasetHash: hash(readFileSync(datasetPath, "utf8")), freeze, rows, analysis: analyzeJev(rows) }));
-    console.log(`${mode}: ${rows.length}/${selected.length} ${row.failure?.code ?? "validated"}`);
+    if (options.mode === "heldout") {
+      appendFileSync(JOURNAL_PATH, JSON.stringify({ event: "attempt_finished", row }) + "\n");
+    }
+    writeProgressArtifact({
+      outputPath: options.outputPath,
+      commit: options.commit,
+      startedAt,
+      sourceHash: options.sourceHash,
+      datasetPath: options.datasetPath,
+      freeze: options.freeze,
+      rows,
+      totalExamples: examples.length,
+    });
+    console.log(`${options.mode}: ${rows.length}/${examples.length} ${row.failure?.code ?? "validated"}`);
     // Integration failures in DEV stop spending immediately; heldout failures remain measured.
-    if (mode === "dev" && row.failure) break;
+    if (options.mode === "dev" && row.failure) {
+      break;
+    }
   }
 }
-main().catch(() => { console.error("Jev run stopped. Check prerequisites, exclusive artifacts, and recorded status; no automatic retry."); process.exitCode = 1; });
+
+async function runDev(commit: string, sourceHash: string, apiKey: string): Promise<void> {
+  if (existsSync(FREEZE_PATH)) {
+    throw new Error("DEV calls disabled after freeze");
+  }
+  await runPaidEvaluation({
+    mode: "dev",
+    commit,
+    sourceHash,
+    outputPath: devArtifactPath(sourceHash),
+    datasetPath: DEV_DATASET_PATH,
+    freeze: undefined,
+    apiKey,
+  });
+}
+
+async function runHeldout(commit: string, sourceHash: string, apiKey: string): Promise<void> {
+  requireCleanTree();
+  const freeze = readFreezeManifest(sourceHash, devArtifactPath(sourceHash));
+  runGit("merge-base", "--is-ancestor", String(freeze["codeCommit"]), commit);
+  await runPaidEvaluation({
+    mode: "heldout",
+    commit,
+    sourceHash,
+    outputPath: heldoutArtifactPath(commit),
+    datasetPath: HELDOUT_DATASET_PATH,
+    freeze,
+    apiKey,
+  });
+}
+
+async function main(): Promise<void> {
+  const mode = parseMode(process.argv[2]);
+  const commit = runGit("rev-parse", "HEAD");
+  const sourceHash = computeSourceHash();
+
+  if (mode === "freeze") {
+    runFreeze(commit, sourceHash);
+    return;
+  }
+
+  requirePaidFlag();
+  const apiKey = requireApiKey();
+  if (mode === "dev") {
+    await runDev(commit, sourceHash, apiKey);
+    return;
+  }
+  await runHeldout(commit, sourceHash, apiKey);
+}
+
+main().catch(() => {
+  console.error(
+    "Jev run stopped. Check prerequisites, exclusive artifacts, and recorded status; no automatic retry.",
+  );
+  process.exitCode = 1;
+});

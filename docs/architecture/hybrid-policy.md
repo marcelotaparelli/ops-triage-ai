@@ -1,8 +1,3 @@
-# Phase 4 — Hybrid Policy
-
-Phase 4 is complete. Its central responsibility rule is: **the classifier
-classifies; the policy decides.**
-
 ## Architecture
 
 The LLM classifier is the semantic classifier. The deterministic classifier is

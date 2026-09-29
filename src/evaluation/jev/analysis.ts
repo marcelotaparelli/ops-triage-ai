@@ -9,81 +9,328 @@ export interface JevRow {
   result?: JevTriageResult;
   failure?: { code: JevFailure; status?: number; usage?: JevUsage };
 }
-const fields = ["category", "priority", "risk"] as const;
-const thresholds = [0, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99];
-const ratio = (n: number, d: number) => d ? n / d : 0;
-const round = (n: number) => Math.round(n * 10_000) / 10_000;
-export function analyzeJev(rows: readonly JevRow[]) {
-  if (!rows.length) throw new Error("Empty experiment");
-  const successful = rows.filter(r => r.result);
-  const correct = (r: JevRow, f: typeof fields[number]) => r.result?.answers[f].choice === r.expected[f];
-  const tuple = (r: JevRow) => fields.every(f => correct(r, f));
-  const accuracy = (f: typeof fields[number]) => round(ratio(rows.filter(r => correct(r, f)).length, rows.length));
-  const positives = rows.filter(r => [Priority.HIGH, Priority.CRITICAL].includes(r.expected.priority));
-  const highRisk = rows.filter(r => r.expected.risk === Risk.HIGH);
-  const latency = rows.map(r => r.latencyMs).sort((a, b) => a - b);
-  const percentile = (p: number) => latency[Math.max(0, Math.ceil(p * latency.length) - 1)]!;
-  const probabilityAnalysis = Object.fromEntries(fields.map(f => {
-    const details = successful.map(r => {
-      const answer = r.result!.answers[f];
-      const distribution = answer.probabilities as Record<string, number>;
-      const ordered = Object.values(distribution).sort((a, b) => b - a);
-      return { id: r.id, correct: correct(r, f), confidence: answer.confidence,
-        topProbability: ordered[0]!, margin: ordered[0]! - ordered[1]!,
-        brier: Object.entries(distribution).reduce((s, [label, p]) => s + (p - Number(label === r.expected[f])) ** 2, 0) };
-    });
-    const buckets = Array.from({ length: 5 }, (_, i) => {
-      const low = i / 5, high = (i + 1) / 5;
-      const selected = details.filter(r => r.topProbability >= low && (r.topProbability < high || i === 4));
-      return { low, high, count: selected.length,
-        accuracy: selected.length ? ratio(selected.filter(r => r.correct).length, selected.length) : null,
-        meanTopProbability: selected.length ? ratio(selected.reduce((s, r) => s + r.topProbability, 0), selected.length) : null };
-    });
-    const confidenceBuckets = Array.from({ length: 5 }, (_, i) => {
-      const selected = details.filter(r => r.confidence >= i / 5 && (r.confidence < (i + 1) / 5 || i === 4));
-      return { low: i / 5, high: (i + 1) / 5, count: selected.length,
-        accuracy: selected.length ? ratio(selected.filter(r => r.correct).length, selected.length) : null };
-    });
-    return [f, { details, buckets, confidenceBuckets,
-      brier: details.length ? ratio(details.reduce((s, r) => s + r.brier, 0), details.length) : null,
-      ece: details.length ? buckets.reduce((s, b) => s + b.count / details.length * Math.abs((b.accuracy ?? 0) - (b.meanTopProbability ?? 0)), 0) : null,
-      selective: thresholds.map(threshold => {
-        const selected = details.filter(r => r.confidence >= threshold);
-        return { threshold, count: selected.length, coverage: ratio(selected.length, rows.length),
-          accuracy: selected.length ? ratio(selected.filter(r => r.correct).length, selected.length) : null };
-      }) }];
-  }));
-  const usage = rows.map(r => r.result?.usage ?? r.failure?.usage);
-  const inputUsage = usage.map(u => u?.input_tokens);
-  const costs = usage.map(u => u?.cost);
+
+type JevField = "category" | "priority" | "risk";
+
+const JEV_FIELDS: readonly JevField[] = ["category", "priority", "risk"];
+const SELECTIVE_THRESHOLDS = [0, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99];
+const CALIBRATION_BIN_COUNT = 5;
+
+function ratio(numerator: number, denominator: number): number {
+  if (denominator === 0) {
+    return 0;
+  }
+  return numerator / denominator;
+}
+
+function roundToFourDecimals(value: number): number {
+  return Math.round(value * 10_000) / 10_000;
+}
+
+function isFieldCorrect(row: JevRow, field: JevField): boolean {
+  return row.result?.answers[field].choice === row.expected[field];
+}
+
+function isTupleCorrect(row: JevRow): boolean {
+  return JEV_FIELDS.every((field) => isFieldCorrect(row, field));
+}
+
+function fieldAccuracy(rows: readonly JevRow[], field: JevField): number {
+  const correctCount = rows.filter((row) => isFieldCorrect(row, field)).length;
+  return roundToFourDecimals(ratio(correctCount, rows.length));
+}
+
+function categoryMacroF1(rows: readonly JevRow[]): number {
+  const perCategoryF1 = Object.values(Category).map((category) => {
+    const truePositives = rows.filter(
+      (row) => row.expected.category === category && isFieldCorrect(row, "category"),
+    ).length;
+    const falsePositives = rows.filter(
+      (row) => row.expected.category !== category && row.result?.answers.category.choice === category,
+    ).length;
+    const falseNegatives = rows.filter(
+      (row) => row.expected.category === category && !isFieldCorrect(row, "category"),
+    ).length;
+    return ratio(2 * truePositives, 2 * truePositives + falsePositives + falseNegatives);
+  });
+  const meanF1 = ratio(
+    perCategoryF1.reduce((sum, value) => sum + value, 0),
+    perCategoryF1.length,
+  );
+  return roundToFourDecimals(meanF1);
+}
+
+function highCriticalPriorityRecall(rows: readonly JevRow[]): number {
+  const expectedPositives = rows.filter((row) =>
+    [Priority.HIGH, Priority.CRITICAL].includes(row.expected.priority),
+  );
+  const recalledPositives = expectedPositives.filter(
+    (row) =>
+      row.result !== undefined &&
+      [Priority.HIGH, Priority.CRITICAL].includes(row.result.answers.priority.choice),
+  );
+  return roundToFourDecimals(ratio(recalledPositives.length, expectedPositives.length));
+}
+
+function highRiskRecall(rows: readonly JevRow[]): number {
+  const expectedHighRisk = rows.filter((row) => row.expected.risk === Risk.HIGH);
+  const recalledHighRisk = expectedHighRisk.filter((row) => isFieldCorrect(row, "risk"));
+  return roundToFourDecimals(ratio(recalledHighRisk.length, expectedHighRisk.length));
+}
+
+function exactTupleAccuracy(rows: readonly JevRow[]): number {
+  return roundToFourDecimals(ratio(rows.filter(isTupleCorrect).length, rows.length));
+}
+
+function sortedLatencies(rows: readonly JevRow[]): number[] {
+  return rows.map((row) => row.latencyMs).sort((a, b) => a - b);
+}
+
+// Nearest-rank percentile over all attempts, failures included.
+function nearestRank(sortedValues: readonly number[], percentile: number): number {
+  const rank = Math.ceil(percentile * sortedValues.length) - 1;
+  return sortedValues[Math.max(0, rank)]!;
+}
+
+interface ProbabilityDetail {
+  id: string;
+  correct: boolean;
+  confidence: number;
+  topProbability: number;
+  margin: number;
+  brier: number;
+}
+
+function probabilityDetailsForField(
+  successfulRows: readonly JevRow[],
+  field: JevField,
+): ProbabilityDetail[] {
+  return successfulRows.map((row) => {
+    const answer = row.result!.answers[field];
+    const distribution = answer.probabilities as Record<string, number>;
+    const sortedProbabilities = Object.values(distribution).sort((a, b) => b - a);
+    const topProbability = sortedProbabilities[0]!;
+    const secondProbability = sortedProbabilities[1]!;
+    const brier = Object.entries(distribution).reduce(
+      (sum, [label, probability]) => sum + (probability - Number(label === row.expected[field])) ** 2,
+      0,
+    );
+    return {
+      id: row.id,
+      correct: isFieldCorrect(row, field),
+      confidence: answer.confidence,
+      topProbability,
+      margin: topProbability - secondProbability,
+      brier,
+    };
+  });
+}
+
+interface TopProbabilityBucket {
+  low: number;
+  high: number;
+  count: number;
+  accuracy: number | null;
+  meanTopProbability: number | null;
+}
+
+// Bins are left-inclusive/right-exclusive; the final bin includes 1.
+function topProbabilityBuckets(details: readonly ProbabilityDetail[]): TopProbabilityBucket[] {
+  return Array.from({ length: CALIBRATION_BIN_COUNT }, (_, index) => {
+    const low = index / CALIBRATION_BIN_COUNT;
+    const high = (index + 1) / CALIBRATION_BIN_COUNT;
+    const isLastBin = index === CALIBRATION_BIN_COUNT - 1;
+    const selected = details.filter(
+      (detail) => detail.topProbability >= low && (detail.topProbability < high || isLastBin),
+    );
+    return {
+      low,
+      high,
+      count: selected.length,
+      accuracy:
+        selected.length > 0
+          ? ratio(selected.filter((detail) => detail.correct).length, selected.length)
+          : null,
+      meanTopProbability:
+        selected.length > 0
+          ? ratio(
+              selected.reduce((sum, detail) => sum + detail.topProbability, 0),
+              selected.length,
+            )
+          : null,
+    };
+  });
+}
+
+interface ConfidenceBucket {
+  low: number;
+  high: number;
+  count: number;
+  accuracy: number | null;
+}
+
+function confidenceBuckets(details: readonly ProbabilityDetail[]): ConfidenceBucket[] {
+  return Array.from({ length: CALIBRATION_BIN_COUNT }, (_, index) => {
+    const low = index / CALIBRATION_BIN_COUNT;
+    const high = (index + 1) / CALIBRATION_BIN_COUNT;
+    const isLastBin = index === CALIBRATION_BIN_COUNT - 1;
+    const selected = details.filter(
+      (detail) => detail.confidence >= low && (detail.confidence < high || isLastBin),
+    );
+    return {
+      low,
+      high,
+      count: selected.length,
+      accuracy:
+        selected.length > 0
+          ? ratio(selected.filter((detail) => detail.correct).length, selected.length)
+          : null,
+    };
+  });
+}
+
+function meanBrierScore(details: readonly ProbabilityDetail[]): number | null {
+  if (details.length === 0) {
+    return null;
+  }
+  return ratio(details.reduce((sum, detail) => sum + detail.brier, 0), details.length);
+}
+
+function expectedCalibrationError(
+  details: readonly ProbabilityDetail[],
+  buckets: readonly TopProbabilityBucket[],
+): number | null {
+  if (details.length === 0) {
+    return null;
+  }
+  return buckets.reduce(
+    (sum, bucket) =>
+      sum +
+      (bucket.count / details.length) * Math.abs((bucket.accuracy ?? 0) - (bucket.meanTopProbability ?? 0)),
+    0,
+  );
+}
+
+interface ConfidenceSelection {
+  threshold: number;
+  count: number;
+  coverage: number;
+  accuracy: number | null;
+}
+
+function selectiveAccuracyByConfidence(
+  details: readonly ProbabilityDetail[],
+  totalAttempts: number,
+): ConfidenceSelection[] {
+  return SELECTIVE_THRESHOLDS.map((threshold) => {
+    const selected = details.filter((detail) => detail.confidence >= threshold);
+    return {
+      threshold,
+      count: selected.length,
+      coverage: ratio(selected.length, totalAttempts),
+      accuracy:
+        selected.length > 0
+          ? ratio(selected.filter((detail) => detail.correct).length, selected.length)
+          : null,
+    };
+  });
+}
+
+function analyzeFieldProbabilities(successfulRows: readonly JevRow[], totalAttempts: number) {
+  return Object.fromEntries(
+    JEV_FIELDS.map((field) => {
+      const details = probabilityDetailsForField(successfulRows, field);
+      const buckets = topProbabilityBuckets(details);
+      return [
+        field,
+        {
+          details,
+          buckets,
+          confidenceBuckets: confidenceBuckets(details),
+          brier: meanBrierScore(details),
+          ece: expectedCalibrationError(details, buckets),
+          selective: selectiveAccuracyByConfidence(details, totalAttempts),
+        },
+      ];
+    }),
+  );
+}
+
+function summarizeLatency(rows: readonly JevRow[]) {
+  const sorted = sortedLatencies(rows);
   return {
-    examples: rows.length, successes: successful.length, failures: rows.length - successful.length,
+    population: "all attempts, including failures",
+    p50Ms: nearestRank(sorted, 0.5),
+    p95Ms: nearestRank(sorted, 0.95),
+    maxMs: nearestRank(sorted, 1),
+    meanMs: ratio(sorted.reduce((sum, value) => sum + value, 0), sorted.length),
+  };
+}
+
+function summarizeUsage(rows: readonly JevRow[]) {
+  const usages = rows.map((row) => row.result?.usage ?? row.failure?.usage);
+  const inputTokens = usages.map((usage) => usage?.input_tokens);
+  const costs = usages.map((usage) => usage?.cost);
+  return {
+    responsesWithInputTokens: inputTokens.filter((value) => value !== undefined).length,
+    reportedInputTokens: inputTokens.some((value) => value !== undefined)
+      ? inputTokens.reduce<number>((sum, value) => sum + (value ?? 0), 0)
+      : null,
+    responsesWithCost: costs.filter((value) => value !== undefined).length,
+    reportedCostUsd: costs.some((value) => value !== undefined)
+      ? costs.reduce<number>((sum, value) => sum + (value ?? 0), 0)
+      : null,
+    complete: costs.every((value) => value !== undefined) && inputTokens.every((value) => value !== undefined),
+  };
+}
+
+interface TupleSelection {
+  threshold: number;
+  count: number;
+  coverage: number;
+  exactTupleAccuracy: number | null;
+}
+
+function selectiveTupleAccuracy(
+  successfulRows: readonly JevRow[],
+  totalAttempts: number,
+): TupleSelection[] {
+  return SELECTIVE_THRESHOLDS.map((threshold) => {
+    const selected = successfulRows.filter((row) =>
+      JEV_FIELDS.every((field) => row.result!.answers[field].confidence >= threshold),
+    );
+    return {
+      threshold,
+      count: selected.length,
+      coverage: ratio(selected.length, totalAttempts),
+      exactTupleAccuracy:
+        selected.length > 0 ? ratio(selected.filter(isTupleCorrect).length, selected.length) : null,
+    };
+  });
+}
+
+export function analyzeJev(rows: readonly JevRow[]) {
+  if (rows.length === 0) {
+    throw new Error("Empty experiment");
+  }
+  const successfulRows = rows.filter((row) => row.result !== undefined);
+  return {
+    examples: rows.length,
+    successes: successfulRows.length,
+    failures: rows.length - successfulRows.length,
     // Failures are incorrect/false negatives, never silently excluded or replaced.
     metrics: {
-      categoryAccuracy: accuracy("category"),
-      categoryMacroF1: round(Object.values(Category).reduce((sum, category) => {
-        const tp = rows.filter(r => r.expected.category === category && correct(r, "category")).length;
-        const fp = rows.filter(r => r.expected.category !== category && r.result?.answers.category.choice === category).length;
-        const fn = rows.filter(r => r.expected.category === category && !correct(r, "category")).length;
-        return sum + ratio(2 * tp, 2 * tp + fp + fn);
-      }, 0) / Object.values(Category).length),
-      priorityAccuracy: accuracy("priority"), riskAccuracy: accuracy("risk"),
-      highCriticalPriorityRecall: round(ratio(positives.filter(r => r.result && [Priority.HIGH, Priority.CRITICAL].includes(r.result.answers.priority.choice)).length, positives.length)),
-      highRiskRecall: round(ratio(highRisk.filter(r => correct(r, "risk")).length, highRisk.length)),
-      exactTupleAccuracy: round(ratio(rows.filter(tuple).length, rows.length)),
+      categoryAccuracy: fieldAccuracy(rows, "category"),
+      categoryMacroF1: categoryMacroF1(rows),
+      priorityAccuracy: fieldAccuracy(rows, "priority"),
+      riskAccuracy: fieldAccuracy(rows, "risk"),
+      highCriticalPriorityRecall: highCriticalPriorityRecall(rows),
+      highRiskRecall: highRiskRecall(rows),
+      exactTupleAccuracy: exactTupleAccuracy(rows),
     },
-    latency: { population: "all attempts, including failures", p50Ms: percentile(0.5), p95Ms: percentile(0.95),
-      maxMs: percentile(1), meanMs: ratio(latency.reduce((a, b) => a + b, 0), latency.length) },
-    usage: { responsesWithInputTokens: inputUsage.filter(v => v !== undefined).length,
-      reportedInputTokens: inputUsage.some(v => v !== undefined) ? inputUsage.reduce<number>((s, v) => s + (v ?? 0), 0) : null,
-      responsesWithCost: costs.filter(v => v !== undefined).length,
-      reportedCostUsd: costs.some(v => v !== undefined) ? costs.reduce<number>((s, v) => s + (v ?? 0), 0) : null,
-      complete: costs.every(v => v !== undefined) && inputUsage.every(v => v !== undefined) },
-    probabilityAnalysis,
-    selectiveTuple: thresholds.map(threshold => {
-      const selected = successful.filter(r => fields.every(f => r.result!.answers[f].confidence >= threshold));
-      return { threshold, count: selected.length, coverage: ratio(selected.length, rows.length),
-        exactTupleAccuracy: selected.length ? ratio(selected.filter(tuple).length, selected.length) : null };
-    }),
+    latency: summarizeLatency(rows),
+    usage: summarizeUsage(rows),
+    probabilityAnalysis: analyzeFieldProbabilities(successfulRows, rows.length),
+    selectiveTuple: selectiveTupleAccuracy(successfulRows, rows.length),
   };
 }

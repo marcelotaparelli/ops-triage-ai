@@ -1,86 +1,67 @@
 import { loadConfig } from "./config.ts";
-import { DeterministicTriageClassifier } from "./application/classifiers/deterministic-triage-classifier.ts";
-import { PersistedTriageService } from "./application/persisted-triage-service.ts";
-import { TriageTicket } from "./application/triage-ticket.ts";
-import type { TriageMode } from "./application/ports/triage-persistence.ts";
-import { OllamaTriageClassifier } from "./infrastructure/ollama/ollama-triage-classifier.ts";
 import {
-  PrismaFeedbackRepository,
-  PrismaTriageRunRepository,
-} from "./infrastructure/persistence/prisma-triage-repositories.ts";
-import { getPrisma } from "./db.ts";
-import { startServer, stopServer } from "./server.ts";
-import { Metrics, stdoutLogger } from "./observability.ts";
+  buildServerOptions,
+  buildTriageTicket,
+  composeTriageStack,
+  reconcileAbandonedRuns,
+} from "./bootstrap.ts";
+import { DeterministicTriageClassifier } from "./application/classifiers/deterministic-triage-classifier.ts";
+import { startServer } from "./server.ts";
+import { stopServer } from "./server.ts";
+import { stdoutLogger } from "./observability.ts";
+
+// ---------------------------------------------------------------------------
+// Application entry point: load → compose → reconcile → serve → trap signals.
+// Each step is linear and named; details live in bootstrap.ts and server.ts.
+// ---------------------------------------------------------------------------
 
 const config = loadConfig();
+
+// 1. Compose classifiers and ticket: one explicit branch per mode lives
+//    inside buildTriageTicket (no nested ternaries).
 const deterministicClassifier = new DeterministicTriageClassifier();
-const triageTicket =
-  config.TRIAGE_CLASSIFIER === "deterministic"
-    ? new TriageTicket({ mode: "deterministic", classifier: deterministicClassifier })
-    : new TriageTicket(
-        config.TRIAGE_CLASSIFIER === "ollama"
-          ? { mode: "ollama", classifier: createOllamaClassifier() }
-          : {
-              mode: "hybrid",
-              deterministicClassifier,
-              llmClassifier: createOllamaClassifier(),
-            },
-      );
-const prisma = getPrisma(config.DATABASE_URL);
-const triageRunRepository = new PrismaTriageRunRepository(prisma);
-const metrics = new Metrics();
-const triageService = new PersistedTriageService(
-  triageTicket,
-  toTriageMode(config.TRIAGE_CLASSIFIER),
+const triageTicket = buildTriageTicket(config, deterministicClassifier);
+
+// 2. Compose persistence and the persisted service around that ticket.
+const { triageService, triageRunRepository, metrics } = composeTriageStack(config, triageTicket);
+
+// 3. Reconcile abandoned runs before accepting traffic.
+await reconcileAbandonedRuns(
   triageRunRepository,
-  new PrismaFeedbackRepository(prisma),
-);
-const cutoff = new Date(Date.now() - config.STALE_RUN_THRESHOLD_MS);
-const reconciled = await triageRunRepository.reconcileStaleRuns(cutoff);
-metrics.set("stale_runs_reconciled_total", reconciled);
-const statusCounts = await triageRunRepository.getStatusCounts();
-for (const [status, count] of Object.entries(statusCounts)) metrics.set("triage_runs", count, { status });
-stdoutLogger.log("info", "stale_runs_reconciled", { count: reconciled });
-const server = startServer(config.PORT, config.DATABASE_URL, triageService, {
-  ...(config.TRIAGE_API_KEY === undefined ? {} : { apiKey: config.TRIAGE_API_KEY }),
-  bodyLimitBytes: config.HTTP_BODY_LIMIT_BYTES,
-  maxConcurrentTriages: config.TRIAGE_MAX_CONCURRENCY,
-  requestTimeoutMs: config.REQUEST_TIMEOUT_MS,
   metrics,
-  logger: stdoutLogger,
-});
+  config.STALE_RUN_THRESHOLD_MS,
+  stdoutLogger,
+);
+
+// 4. Start the HTTP server.
+const serverOptions = buildServerOptions(config, metrics, stdoutLogger);
+const server = startServer(config.PORT, config.DATABASE_URL, triageService, serverOptions);
 stdoutLogger.log("info", "server_started", { status: config.PORT });
 
-let stopping = false;
-async function shutdown(signal: string): Promise<void> {
-  if (stopping) return;
-  stopping = true;
-  stdoutLogger.log("info", "shutdown_started", { code: signal });
-  await stopServer(server);
-  stdoutLogger.log("info", "shutdown_completed", { code: signal });
-}
-process.on("SIGTERM", () => void shutdown("SIGTERM"));
-process.on("SIGINT", () => void shutdown("SIGINT"));
-process.on("uncaughtException", () => {
-  stdoutLogger.log("error", "unexpected_error", { code: "UNCAUGHT_EXCEPTION" });
-  void shutdown("uncaughtException").finally(() => process.exit(1));
-});
-process.on("unhandledRejection", () => {
-  stdoutLogger.log("error", "unexpected_error", { code: "UNHANDLED_REJECTION" });
-  void shutdown("unhandledRejection").finally(() => process.exit(1));
-});
+// 5. Trap termination signals for graceful shutdown.
+registerShutdownHandlers(server);
 
-function createOllamaClassifier(): OllamaTriageClassifier {
-  if (config.TRIAGE_CLASSIFIER === "deterministic") {
-    throw new Error("Ollama classifier is not configured");
+function registerShutdownHandlers(runningServer: typeof server): void {
+  let stopping = false;
+
+  async function shutdown(signal: string): Promise<void> {
+    if (stopping) {
+      return;
+    }
+    stopping = true;
+    stdoutLogger.log("info", "shutdown_started", { code: signal });
+    await stopServer(runningServer);
+    stdoutLogger.log("info", "shutdown_completed", { code: signal });
   }
-  return new OllamaTriageClassifier({
-    baseUrl: config.OLLAMA_BASE_URL,
-    model: config.OLLAMA_MODEL,
-    timeoutMs: config.OLLAMA_TIMEOUT_MS,
-  });
-}
 
-function toTriageMode(value: "deterministic" | "ollama" | "hybrid"): TriageMode {
-  return value.toUpperCase() as TriageMode;
+  process.on("SIGTERM", () => void shutdown("SIGTERM"));
+  process.on("SIGINT", () => void shutdown("SIGINT"));
+  process.on("uncaughtException", () => {
+    stdoutLogger.log("error", "unexpected_error", { code: "UNCAUGHT_EXCEPTION" });
+    void shutdown("uncaughtException").finally(() => process.exit(1));
+  });
+  process.on("unhandledRejection", () => {
+    stdoutLogger.log("error", "unexpected_error", { code: "UNHANDLED_REJECTION" });
+    void shutdown("unhandledRejection").finally(() => process.exit(1));
+  });
 }

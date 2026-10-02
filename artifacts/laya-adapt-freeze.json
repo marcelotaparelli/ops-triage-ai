@@ -1,0 +1,280 @@
+{
+  "protocol": "laya-domain-adaptation-freeze-2",
+  "frozen_at": "2026-10-02T18:56:27.497439+00:00",
+  "code_commit": "3744c9654a89a9acc061a96ca6abbdf0961f79fd",
+  "source_hash": "5efb03ad019c2fb7a4b6766e8c87967223d1d70f49c4de1a17281ed13a78e313",
+  "training_config_sha256": "2fa1e320a38ebae8327d985df30fa7da9ce25a8ad04e9308c1de978a83ab144a",
+  "question_config_sha256": "32130958ffc4283857bd64e47a9f69f094f076419d2f075a568cc5397e7c3c8f",
+  "train_sha256": "2a8834a98cb26af4469b77da1e3e6a771a910f8d2781c7aecb55e615c35598e3",
+  "validation_sha256": "67f1d4f33b342d1cc6458bb97a4cf93713034b9689d92f20aeb686fe87288e9a",
+  "heldout_sha256": "e3864aaefba8327dff78a0e7680df55650c995664e29daea31aaab85abe63ab0",
+  "heldout_count": 70,
+  "artifact_sha256": {
+    "training": "7e57b9c1e18f0196dc0769c35d03af03310056e658dd4d6cd5faa3ab36b58267",
+    "base_validation": "59ae64dd0d309d03c155c77b29e0065cfc4a87c8938a53eaa4ac5c77b0a7fe1a",
+    "selection": "37945bb036d7a642fe98f6277a34438f7f99f5a5aa59e45b5606f5ea581b08a8",
+    "selected_train": "ef39f6ea16d98c1e289a5151bcb96818976d22e20eb9137339491840a1880c63",
+    "selected_checkpoint_metadata": "5b901c3dd7c2ee3632e59290217513a73f54618bb2273599020c730983ff9438",
+    "validation_epoch_1": "d2c924c01deac6a7f8e5f7dd7fe12409b57ce5024fe251f70c1dbf70dd0cbd09",
+    "validation_epoch_2": "6310d6bbe2feeb3cb0b72606eabc2113e7d032a6c6e6c3998f8625fc65e72274",
+    "validation_epoch_3": "3fb31d2ecc076f307bcdb3c8ee9c34c961f52240ca774eeedbec36afc88bd50b",
+    "validation_epoch_4": "c8acb03f5811939456ef3b865f159ff71a717486812f57e286f76fef2f5602ed"
+  },
+  "base_checkpoint": {
+    "model": "convaiinnovations/laya",
+    "revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "weight_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c"
+  },
+  "training_settings": {
+    "protocol": "laya-domain-adaptation-v1",
+    "base_model": "convaiinnovations/laya",
+    "base_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "base_weight_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c",
+    "question_config_sha256": "32130958ffc4283857bd64e47a9f69f094f076419d2f075a568cc5397e7c3c8f",
+    "train_sha256": "2a8834a98cb26af4469b77da1e3e6a771a910f8d2781c7aecb55e615c35598e3",
+    "validation_sha256": "67f1d4f33b342d1cc6458bb97a4cf93713034b9689d92f20aeb686fe87288e9a",
+    "seed": 20261002,
+    "device": "cuda",
+    "precision": "fp16-autocast-fp32-master",
+    "epochs": 4,
+    "micro_batch_decisions": 4,
+    "gradient_accumulation": 8,
+    "effective_batch_decisions": 32,
+    "optimizer": "AdamW",
+    "encoder_learning_rate": 2.5e-05,
+    "head_learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "scheduler": "CosineAnnealingLR",
+    "eta_min": 1e-06,
+    "gradient_clip_norm": 1.0,
+    "gradient_checkpointing": true,
+    "reward_samples": 4,
+    "reward_weight_spherical": 0.75,
+    "reward_weight_ranked_probability": 1.0,
+    "sigma_start": 0.4,
+    "sigma_end": 0.1,
+    "cross_entropy_weight": 1.0,
+    "max_len": 512,
+    "head_max_len": 192,
+    "temperature_method": "none; candidate checkpoints use temperature 1.0 for all question types and no option bucket overrides",
+    "checkpoint_selection": "highest validation exact tuple accuracy, then category macro-F1, then lowest mean three-field Brier, then earliest epoch",
+    "max_training_seconds": 3600,
+    "cost_cap_usd": 3.0
+  },
+  "training_hardware": {
+    "os": "Linux-6.8.0-134-generic-x86_64-with-glibc2.39",
+    "architecture": "x86_64",
+    "cpu": "Intel(R) Xeon(R) Gold 6342 CPU @ 2.80GHz",
+    "logical_cpus": 96,
+    "ram_bytes": 540642467840,
+    "gpu": "NVIDIA RTX A5000",
+    "vram_bytes": 25283526656,
+    "driver": "580.159.04",
+    "cuda_runtime": "12.1",
+    "torch": "2.5.1+cu121",
+    "laya": "0.3.23",
+    "transformers": "5.18.0",
+    "python": "3.11.13",
+    "device": "cuda:0",
+    "dtype": "fp16 autocast, fp32 master"
+  },
+  "optimizer_accounting": {
+    "optimizer_update_attempts": 420,
+    "optimizer_updates_applied": 413,
+    "grad_scaler_skipped_updates": 7,
+    "scheduler_steps": 413
+  },
+  "optimizer_accounting_by_epoch": [
+    {
+      "epoch": 1,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 99,
+      "grad_scaler_skipped_updates": 6,
+      "scheduler_steps": 99
+    },
+    {
+      "epoch": 2,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 104,
+      "grad_scaler_skipped_updates": 1,
+      "scheduler_steps": 104
+    },
+    {
+      "epoch": 3,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 105,
+      "grad_scaler_skipped_updates": 0,
+      "scheduler_steps": 105
+    },
+    {
+      "epoch": 4,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 105,
+      "grad_scaler_skipped_updates": 0,
+      "scheduler_steps": 105
+    }
+  ],
+  "amp_grad_scaler_behavior": {
+    "precision": "fp16-autocast-fp32-master",
+    "rule": "scheduler advances only when an optimizer post-step hook confirms optimizer.step() ran",
+    "overflow_action": "GradScaler-skipped updates do not advance the scheduler",
+    "unit_tests": [
+      "applied optimizer update advances scheduler",
+      "GradScaler overflow skip leaves scheduler unchanged"
+    ]
+  },
+  "selected_epoch": 4,
+  "selected_weight_sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+  "selected_weight_bytes": 842609220,
+  "selected_inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775",
+  "selected_inference_config": {
+    "encoder": "answerdotai/ModernBERT-large",
+    "head_layers": 2,
+    "max_len": 512,
+    "head_max_len": 192,
+    "max_prefixes": 6,
+    "act_costs": {
+      "escalate": 0.5
+    },
+    "cost_wrong_act": 3.0,
+    "amp_dtype": "bf16",
+    "model_name": "laya-ops-triage-domain-adapted",
+    "temperature": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "training": {
+      "updates": 7313,
+      "epochs_completed": 1,
+      "hours": 1.96,
+      "world_size": 1,
+      "fine_tuned_from_checkpoint": true
+    },
+    "max_tokens_per_batch": 2048,
+    "gradient_checkpointing": true,
+    "fine_tuned": true
+  },
+  "selected_checkpoint_metadata": {
+    "artifact_kind": "large local checkpoint; intentionally not tracked by Git",
+    "local_path": ".cache/laya-adapt-selected/model.safetensors",
+    "selected_epoch": 4,
+    "sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+    "bytes": 842609220,
+    "inference_config_path": ".cache/laya-adapt-selected/rl_agent_config.json",
+    "inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775",
+    "training_checkpoint_sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+    "selection_rule": "highest validation exact tuple accuracy, then category macro-F1, then lowest mean three-field Brier, then earliest epoch",
+    "source_training_artifact": "artifacts/laya-adapt-training.json",
+    "source_selection_artifact": "artifacts/laya-adapt-selection.json"
+  },
+  "checkpoint_selection_rule": "highest validation exact tuple accuracy, then category macro-F1, then lowest mean three-field Brier, then earliest epoch",
+  "taxonomy_mapping": {
+    "source": "scripts/laya_adapt_dataset.py authored operational taxonomy/scenarios",
+    "source_sha256": "27d36a74548ec670867624aae50b3c5d6d1dfa2a930834c1849f21231471fb3e",
+    "labels": {
+      "category": [
+        "ACCESS",
+        "BUG",
+        "CONTENT_CHANGE",
+        "FEATURE_REQUEST",
+        "INCIDENT",
+        "OTHER",
+        "SUPPORT"
+      ],
+      "priority": [
+        "CRITICAL",
+        "HIGH",
+        "LOW",
+        "MEDIUM"
+      ],
+      "risk": [
+        "HIGH",
+        "LOW",
+        "MEDIUM"
+      ]
+    },
+    "project_mapping": "identity mapping to existing project category/priority/risk enum values",
+    "dataset_metadata_sha256": "6e6af287e12c355f0b46da16174c2f95da0aabb649c6824a26e9fcab82502aed"
+  },
+  "calibration_and_thresholds": {
+    "training_temperature_method": "none; candidate checkpoints use temperature 1.0 for all question types and no option bucket overrides",
+    "selected_inference_temperature": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "selective_thresholds": [
+      0,
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ],
+    "thresholds_tuned_on_heldout": false
+  },
+  "first_run_scheduler_anomaly": {
+    "status": "retained for audit; rejected for methodological validity, not accuracy",
+    "pre_correction_validation_code_commit": "d96a31c015c0a8b783883134242ac5b6ed6cc33f",
+    "scheduler_warning": "scheduler.step() was unconditional after scaler.step(); GradScaler skipped an optimizer update",
+    "internal_found_inf_record_retained": false,
+    "selected_epoch_in_first_run": 4,
+    "selected_checkpoint_path": ".cache/laya-adapt-run1-selected/model.safetensors",
+    "selected_checkpoint_sha256": "c74d41ac3a58795555db1e61d69b6a74d6e3f62f365c41caefc0afce6ec7bca7",
+    "training_artifact_sha256": "f6b5083a2073ea3bf7111cbc3db36bf2fdc7288bdae83e86ff6eaf2d61d4e980",
+    "artifact_sha256": {
+      "laya-adapt-selected-train.json": "4a9922a043bb282d3d952cd864ee5fd5cf711b5b9234c5cadfeda623432f0b15",
+      "laya-adapt-selection.json": "da0b47d379d65f478991a761c9d707f24eb0351970627b0a621ca3e53c2c7e37",
+      "laya-adapt-training.json": "f6b5083a2073ea3bf7111cbc3db36bf2fdc7288bdae83e86ff6eaf2d61d4e980",
+      "laya-adapt-validation-epoch-1.json": "62df1501a1a2e0e3d1cbd18c6f4ee45bc1bbb253cffbfdf2529ae1e0d42ebf00",
+      "laya-adapt-validation-epoch-2.json": "69d3cf3a246d99a62a74e705ff6038d9dd3ebf383c97c09c2aec7c65632780d9",
+      "laya-adapt-validation-epoch-3.json": "6e9b5c71017832a13641a3a9310b2b8d45dd2c9607956e04ea798a6d8a4bce09",
+      "laya-adapt-validation-epoch-4.json": "d6cb52e0a37dbf059ce713988ddc544e3cf3fcecab3e960a82bd77403c08a151"
+    },
+    "measured_training_and_eval_seconds": 523.8416078519076
+  },
+  "cost": {
+    "pod_gpu_rate_usd_per_hour_observed": 0.27,
+    "pod_deployment_rate_with_container_disk_usd_per_hour_observed": 0.28,
+    "base_validation_seconds": 481.80698509399997,
+    "first_anomalous_run_training_and_eval_seconds": 523.8416078519076,
+    "corrected_run_training_and_eval_seconds": 517.8599250772968,
+    "total_measured_training_and_evaluation_seconds": 1523.5085180232045,
+    "estimated_cost_at_gpu_rate_usd": 0.11426313885174035,
+    "estimated_cost_at_deployment_rate_usd": 0.11849510695736036,
+    "pod_total_billed_seconds": null,
+    "invoice_available": false,
+    "estimate_scope": "measured experiment task durations only; excludes setup, provider startup and idle time"
+  },
+  "base_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+  "training_summary": {
+    "epochs": 4,
+    "duration_seconds": 427.8621196039021,
+    "peak_vram_bytes": 8348235776,
+    "optimizer_update_attempts": 420,
+    "optimizer_updates_applied": 413,
+    "grad_scaler_skipped_updates": 7,
+    "scheduler_steps": 413
+  },
+  "inference": {
+    "device": "cpu",
+    "torch_threads": 4,
+    "max_len": 512,
+    "head_max_len": 192,
+    "compile": false,
+    "fast": false,
+    "thresholds": [
+      0,
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ]
+  },
+  "planned_runs": 1,
+  "planned_tickets": 70
+}

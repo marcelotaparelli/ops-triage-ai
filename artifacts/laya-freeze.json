@@ -1,0 +1,89 @@
+{
+  "protocol": "laya-english-zero-shot-v1",
+  "frozen_at": "2026-10-02T06:51:45.570697+00:00",
+  "code_commit": "e39d25e98d56440bad85834dc684ad88b0e57402",
+  "source_hash": "f10ff76da8ba3bd7b348aace50099abff5ac0f4e3a0f586c303dbdddaa73c628",
+  "config_hash": "32130958ffc4283857bd64e47a9f69f094f076419d2f075a568cc5397e7c3c8f",
+  "dev_artifact_hash": "a8f9e52330ddd6c36b18d97fd6dc9b1ae055830dc561db8dece2ad5c8cd1c1c2",
+  "dataset_hash": "e3864aaefba8327dff78a0e7680df55650c995664e29daea31aaab85abe63ab0",
+  "dataset_count": 70,
+  "planned_runs": 1,
+  "planned_tickets": 70,
+  "checkpoint": "convaiinnovations/laya",
+  "checkpoint_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+  "library": "laya==0.3.23",
+  "device": "cpu",
+  "dtype": "torch.float32",
+  "thresholds": [
+    0,
+    0.5,
+    0.7,
+    0.8,
+    0.9,
+    0.95,
+    0.99
+  ],
+  "configuration": {
+    "protocol": "laya-english-zero-shot-v1",
+    "library": "laya==0.3.23",
+    "model": "convaiinnovations/laya",
+    "revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "device": "cpu",
+    "max_len": 512,
+    "head_max_len": 192,
+    "torch_threads": 4,
+    "compile": false,
+    "fast": false,
+    "batch_size": null,
+    "calibration_override": null,
+    "min_confidence": null,
+    "smoke_ids": [
+      "dev-incident-01",
+      "dev-access-01",
+      "dev-support-01"
+    ],
+    "selective_thresholds": [
+      0,
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ],
+    "questions": {
+      "category": {
+        "type": "choice",
+        "instructions": "Classify this English operational ticket by the observed problem or requested action. Use explicit evidence.",
+        "criteria": {
+          "INCIDENT": "Service degradation or unavailability, outage.",
+          "BUG": "Incorrect existing behavior, error, regression or functional failure.",
+          "FEATURE_REQUEST": "New capability or functional improvement.",
+          "CONTENT_CHANGE": "Editorial text, copy, translation or visual content change.",
+          "SUPPORT": "Help, guidance, explanation or usage instructions.",
+          "ACCESS": "Authentication, login, credentials, permission or authorization problem.",
+          "OTHER": "Information or note needing none of these actions."
+        }
+      },
+      "priority": {
+        "type": "choice",
+        "instructions": "Assign ticket priority from explicit operational impact. Default INCIDENT to HIGH, BUG and ACCESS to MEDIUM, other categories to LOW unless evidence warrants more.",
+        "criteria": {
+          "LOW": "Feature, content, support or informational request without exceptional impact.",
+          "MEDIUM": "Bug or access problem without blocking or severe impact.",
+          "HIGH": "Incident; blocking bug or critical access/work/deployment problem.",
+          "CRITICAL": "Data loss/corruption, security compromise, or production outage with broad user impact."
+        }
+      },
+      "risk": {
+        "type": "choice",
+        "instructions": "Assign operational risk from explicit evidence, not speculation. Default incident to MEDIUM; ordinary bug, login and routine requests to LOW.",
+        "criteria": {
+          "LOW": "No explicit operational harm; routine bug, login or request.",
+          "MEDIUM": "Incident, blocking regression or operational permission problem without proven severe harm.",
+          "HIGH": "Actual production outage, data loss/corruption or security compromise."
+        }
+      }
+    }
+  }
+}

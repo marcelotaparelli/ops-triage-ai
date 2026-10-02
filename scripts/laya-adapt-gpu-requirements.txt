@@ -1,0 +1,6 @@
+# Evaluation/training tooling only. Install a CUDA-enabled PyTorch build for
+# the chosen GPU/driver first; record its exact version in training.json.
+laya==0.3.23
+transformers==5.18.0
+huggingface_hub==1.33.0
+safetensors==0.8.0

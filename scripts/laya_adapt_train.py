@@ -14,6 +14,7 @@ import os
 import platform
 import random
 import resource
+import subprocess
 import time
 from pathlib import Path
 
@@ -84,10 +85,20 @@ def hardware() -> dict:
             "ram_bytes": next((int(line.split()[1]) * 1024 for line in Path("/proc/meminfo").read_text().splitlines()
                                if line.startswith("MemTotal:")), None),
             "gpu": properties.name, "vram_bytes": properties.total_memory,
-            "driver": os.popen("nvidia-smi --query-gpu=driver_version --format=csv,noheader").read().strip() or None,
+            "driver": nvidia_smi("driver_version"),
             "cuda_runtime": torch.version.cuda, "torch": torch.__version__,
             "laya": laya.__version__, "transformers": transformers.__version__,
             "python": platform.python_version(), "device": "cuda:0", "dtype": "fp16 autocast, fp32 master"}
+
+
+def nvidia_smi(fields: str) -> str | None:
+    try:
+        output = subprocess.check_output(
+            ["nvidia-smi", f"--query-gpu={fields}", "--format=csv,noheader,nounits", "-i", "0"],
+            text=True, stderr=subprocess.DEVNULL, timeout=5)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return None
+    return output.strip() or None
 
 
 def save_checkpoint(model, tokenizer, model_cfg: dict, output: Path, epoch: int) -> dict:
@@ -164,6 +175,7 @@ def train(output: Path) -> None:
         random.Random(settings["seed"] + epoch).shuffle(items)
         optimizer.zero_grad(set_to_none=True)
         total_loss, n_batches, update_count = 0.0, 0, 0
+        utilization_samples = []
         sigma = settings["sigma_start"] + (settings["sigma_end"] - settings["sigma_start"]) * epoch / max(1, settings["epochs"] - 1)
         for start in range(0, len(items), microbatch):
             if time.perf_counter() - run_start > settings["max_training_seconds"]:
@@ -200,12 +212,21 @@ def train(output: Path) -> None:
                 optimizer.zero_grad(set_to_none=True)
                 update_count += 1
             if n_batches % 100 == 0:
+                observation = nvidia_smi("utilization.gpu,memory.used")
+                if observation:
+                    try:
+                        utilization, memory_mib = (int(value.strip()) for value in observation.split(","))
+                        utilization_samples.append({"batch": n_batches, "gpu_utilization_percent": utilization,
+                                                    "reported_vram_used_mib": memory_mib})
+                    except ValueError:
+                        pass
                 print(f"epoch {epoch+1}/{settings['epochs']} batch {n_batches} loss {float(loss.detach())*accumulation:.4f}", flush=True)
         checkpoint = save_checkpoint(model, tokenizer, base_cfg, output, epoch + 1)
         result = {"epoch": epoch + 1, "mean_training_loss": total_loss / n_batches,
                   "optimizer_updates": update_count, "duration_seconds": time.perf_counter() - epoch_start,
                   "cuda_peak_allocated_bytes": torch.cuda.max_memory_allocated(),
                   "cuda_peak_reserved_bytes": torch.cuda.max_memory_reserved(),
+                  "nvidia_smi_samples": utilization_samples,
                   "checkpoint": checkpoint}
         measurements["epoch_results"].append(result)
         (output / "training.json").write_text(json.dumps(measurements, indent=2) + "\n")

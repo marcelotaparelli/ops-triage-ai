@@ -12,6 +12,7 @@ import laya_adapt_dataset as dataset  # noqa: E402
 
 class DatasetTests(unittest.TestCase):
     def test_deterministic_disjoint_splits_and_taxonomy(self):
+        self.assertEqual(len(dataset.SCENARIOS), 33)
         train = dataset.generate("train", 1120, dataset.SEED)
         validation = dataset.generate("validation", 280, dataset.SEED + 1)
         self.assertEqual(train, dataset.generate("train", 1120, dataset.SEED))
@@ -22,6 +23,10 @@ class DatasetTests(unittest.TestCase):
         self.assertEqual(len(val_text), len(validation))
         self.assertFalse(train_text & val_text)
         for rows in (train, validation):
+            self.assertGreater(sum(row["scenario"] >= 24 for row in rows), len(rows) // 8)
+            lengths = [len(row["input"]["title"] + " " + row["input"]["description"]) for row in rows]
+            self.assertLess(min(lengths), 150)
+            self.assertGreater(max(lengths), 400)
             for row in rows:
                 expected = row["expected"]
                 self.assertEqual(set(expected), {"category", "priority", "risk"})

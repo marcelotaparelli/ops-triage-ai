@@ -5,6 +5,9 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import torch
+from laya.common import proper_reward
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 import laya_adapt_train as training  # noqa: E402
@@ -48,6 +51,20 @@ class TrainingItemTests(unittest.TestCase):
     def test_collapsed_options_rejected(self, _build, _render):
         with self.assertRaisesRegex(ValueError, "Collapsed options"):
             training.prepare_item(None, self.config, self.ticket, "priority", self.question)
+
+    def test_one_hot_target_is_valid_for_official_reward(self):
+        items = [{"ids": [10, 11, 12], "markers": [0, 1, 2, 3],
+                  "target": [1.0, 0.0, 0.0, 0.0], "qtype": training.QTYPES["choice"]},
+                 {"ids": [10, 11], "markers": [0, 1, 2],
+                  "target": [0.0, 1.0, 0.0], "qtype": training.QTYPES["choice"]}]
+        ids, attention, positions, mask, target, qtype = training.collate(items, pad_id=0)
+        self.assertEqual(tuple(ids.shape), (2, 3))
+        self.assertEqual(int(attention[1].sum()), 2)
+        self.assertEqual(tuple(positions.shape), (2, 4))
+        probabilities = torch.softmax(torch.randn(4, 2, 4).masked_fill(~mask, -1e4), -1)
+        rewards = proper_reward(probabilities, target.unsqueeze(0), qtype, mask, w_sph=.75, w_rps=1.0)
+        self.assertEqual(tuple(rewards.shape), (4, 2))
+        self.assertTrue(bool(torch.isfinite(rewards).all()))
 
 
 if __name__ == "__main__":

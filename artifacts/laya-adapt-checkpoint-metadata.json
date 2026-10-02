@@ -1,0 +1,13 @@
+{
+  "artifact_kind": "large local checkpoint; intentionally not tracked by Git",
+  "local_path": ".cache/laya-adapt-selected/model.safetensors",
+  "selected_epoch": 4,
+  "sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+  "bytes": 842609220,
+  "inference_config_path": ".cache/laya-adapt-selected/rl_agent_config.json",
+  "inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775",
+  "training_checkpoint_sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+  "selection_rule": "highest validation exact tuple accuracy, then category macro-F1, then lowest mean three-field Brier, then earliest epoch",
+  "source_training_artifact": "artifacts/laya-adapt-training.json",
+  "source_selection_artifact": "artifacts/laya-adapt-selection.json"
+}

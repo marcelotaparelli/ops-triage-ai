@@ -1,0 +1,67 @@
+{
+  "protocol": "laya-domain-adaptation-v1",
+  "selection_rule": "highest validation exact tuple accuracy, then category macro-F1, then lowest mean three-field Brier, then earliest epoch",
+  "selected_epoch": 4,
+  "selected_weight_sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+  "candidate_summary": [
+    {
+      "epoch": 1,
+      "metrics": {
+        "categoryAccuracy": 0.9714,
+        "priorityAccuracy": 0.925,
+        "riskAccuracy": 0.9679,
+        "categoryMacroF1": 0.971,
+        "highCriticalPriorityRecall": 0.7746,
+        "highRiskRecall": 0.7692,
+        "exactTupleAccuracy": 0.8857
+      },
+      "mean_three_field_brier": 0.08275287254761905
+    },
+    {
+      "epoch": 2,
+      "metrics": {
+        "categoryAccuracy": 0.9536,
+        "priorityAccuracy": 0.95,
+        "riskAccuracy": 0.975,
+        "categoryMacroF1": 0.946,
+        "highCriticalPriorityRecall": 0.8873,
+        "highRiskRecall": 1.0,
+        "exactTupleAccuracy": 0.8893
+      },
+      "mean_three_field_brier": 0.07241915333333333
+    },
+    {
+      "epoch": 3,
+      "metrics": {
+        "categoryAccuracy": 0.9821,
+        "priorityAccuracy": 0.9536,
+        "riskAccuracy": 0.9857,
+        "categoryMacroF1": 0.9756,
+        "highCriticalPriorityRecall": 0.9014,
+        "highRiskRecall": 1.0,
+        "exactTupleAccuracy": 0.925
+      },
+      "mean_three_field_brier": 0.052026288488095235
+    },
+    {
+      "epoch": 4,
+      "metrics": {
+        "categoryAccuracy": 0.9821,
+        "priorityAccuracy": 0.9536,
+        "riskAccuracy": 0.9857,
+        "categoryMacroF1": 0.9756,
+        "highCriticalPriorityRecall": 0.9014,
+        "highRiskRecall": 1.0,
+        "exactTupleAccuracy": 0.925
+      },
+      "mean_three_field_brier": 0.05197765741666666
+    }
+  ],
+  "training_artifact_sha256": "7e57b9c1e18f0196dc0769c35d03af03310056e658dd4d6cd5faa3ab36b58267",
+  "candidate_artifact_sha256": {
+    "1": "d2c924c01deac6a7f8e5f7dd7fe12409b57ce5024fe251f70c1dbf70dd0cbd09",
+    "2": "6310d6bbe2feeb3cb0b72606eabc2113e7d032a6c6e6c3998f8625fc65e72274",
+    "3": "3fb31d2ecc076f307bcdb3c8ee9c34c961f52240ca774eeedbec36afc88bd50b",
+    "4": "c8acb03f5811939456ef3b865f159ff71a717486812f57e286f76fef2f5602ed"
+  }
+}

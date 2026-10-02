@@ -1,0 +1,304 @@
+{
+  "protocol": "laya-domain-adaptation-v1",
+  "settings": {
+    "protocol": "laya-domain-adaptation-v1",
+    "base_model": "convaiinnovations/laya",
+    "base_revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "base_weight_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c",
+    "question_config_sha256": "32130958ffc4283857bd64e47a9f69f094f076419d2f075a568cc5397e7c3c8f",
+    "train_sha256": "2a8834a98cb26af4469b77da1e3e6a771a910f8d2781c7aecb55e615c35598e3",
+    "validation_sha256": "67f1d4f33b342d1cc6458bb97a4cf93713034b9689d92f20aeb686fe87288e9a",
+    "seed": 20261002,
+    "device": "cuda",
+    "precision": "fp16-autocast-fp32-master",
+    "epochs": 4,
+    "micro_batch_decisions": 4,
+    "gradient_accumulation": 8,
+    "effective_batch_decisions": 32,
+    "optimizer": "AdamW",
+    "encoder_learning_rate": 2.5e-05,
+    "head_learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "scheduler": "CosineAnnealingLR",
+    "eta_min": 1e-06,
+    "gradient_clip_norm": 1.0,
+    "gradient_checkpointing": true,
+    "reward_samples": 4,
+    "reward_weight_spherical": 0.75,
+    "reward_weight_ranked_probability": 1.0,
+    "sigma_start": 0.4,
+    "sigma_end": 0.1,
+    "cross_entropy_weight": 1.0,
+    "max_len": 512,
+    "head_max_len": 192,
+    "temperature_method": "none; candidate checkpoints use temperature 1.0 for all question types and no option bucket overrides",
+    "checkpoint_selection": "highest validation exact tuple accuracy, then category macro-F1, then lowest mean three-field Brier, then earliest epoch",
+    "max_training_seconds": 3600,
+    "cost_cap_usd": 3.0
+  },
+  "hardware": {
+    "os": "Linux-6.8.0-134-generic-x86_64-with-glibc2.39",
+    "architecture": "x86_64",
+    "cpu": "Intel(R) Xeon(R) Gold 6342 CPU @ 2.80GHz",
+    "logical_cpus": 96,
+    "ram_bytes": 540642467840,
+    "gpu": "NVIDIA RTX A5000",
+    "vram_bytes": 25283526656,
+    "driver": "580.159.04",
+    "cuda_runtime": "12.1",
+    "torch": "2.5.1+cu121",
+    "laya": "0.3.23",
+    "transformers": "5.18.0",
+    "python": "3.11.13",
+    "device": "cuda:0",
+    "dtype": "fp16 autocast, fp32 master"
+  },
+  "train_dataset_sha256": "2a8834a98cb26af4469b77da1e3e6a771a910f8d2781c7aecb55e615c35598e3",
+  "base_weight_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c",
+  "decisions": 3360,
+  "epoch_results": [
+    {
+      "epoch": 1,
+      "mean_training_loss": 0.3396508824103789,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 99,
+      "grad_scaler_skipped_updates": 6,
+      "scheduler_steps": 99,
+      "duration_seconds": 110.03557427413762,
+      "cuda_peak_allocated_bytes": 8342042624,
+      "cuda_peak_reserved_bytes": 9026142208,
+      "nvidia_smi_samples": [
+        {
+          "batch": 100,
+          "gpu_utilization_percent": 58,
+          "reported_vram_used_mib": 8869
+        },
+        {
+          "batch": 200,
+          "gpu_utilization_percent": 74,
+          "reported_vram_used_mib": 8869
+        },
+        {
+          "batch": 300,
+          "gpu_utilization_percent": 85,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 400,
+          "gpu_utilization_percent": 83,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 500,
+          "gpu_utilization_percent": 77,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 600,
+          "gpu_utilization_percent": 76,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 700,
+          "gpu_utilization_percent": 63,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 800,
+          "gpu_utilization_percent": 61,
+          "reported_vram_used_mib": 8881
+        }
+      ],
+      "checkpoint": {
+        "epoch": 1,
+        "weight_sha256": "95393e5402adf2518af2920bea195b7f23f98bc55990c695f9436264c77d0f61",
+        "weight_bytes": 842609220,
+        "inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775"
+      }
+    },
+    {
+      "epoch": 2,
+      "mean_training_loss": 0.12050799923987748,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 104,
+      "grad_scaler_skipped_updates": 1,
+      "scheduler_steps": 104,
+      "duration_seconds": 104.70226041600108,
+      "cuda_peak_allocated_bytes": 8348235776,
+      "cuda_peak_reserved_bytes": 9026142208,
+      "nvidia_smi_samples": [
+        {
+          "batch": 100,
+          "gpu_utilization_percent": 61,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 200,
+          "gpu_utilization_percent": 69,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 300,
+          "gpu_utilization_percent": 85,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 400,
+          "gpu_utilization_percent": 81,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 500,
+          "gpu_utilization_percent": 83,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 600,
+          "gpu_utilization_percent": 82,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 700,
+          "gpu_utilization_percent": 72,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 800,
+          "gpu_utilization_percent": 82,
+          "reported_vram_used_mib": 8881
+        }
+      ],
+      "checkpoint": {
+        "epoch": 2,
+        "weight_sha256": "2a6dcd2b671d52bb1ad8159af83b5db33a01e8c41abcdd0ab839039fff85a65f",
+        "weight_bytes": 842609220,
+        "inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775"
+      }
+    },
+    {
+      "epoch": 3,
+      "mean_training_loss": 0.0031635452316896547,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 105,
+      "grad_scaler_skipped_updates": 0,
+      "scheduler_steps": 105,
+      "duration_seconds": 105.41470796056092,
+      "cuda_peak_allocated_bytes": 8348235776,
+      "cuda_peak_reserved_bytes": 9036627968,
+      "nvidia_smi_samples": [
+        {
+          "batch": 100,
+          "gpu_utilization_percent": 72,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 200,
+          "gpu_utilization_percent": 70,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 300,
+          "gpu_utilization_percent": 75,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 400,
+          "gpu_utilization_percent": 72,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 500,
+          "gpu_utilization_percent": 55,
+          "reported_vram_used_mib": 8881
+        },
+        {
+          "batch": 600,
+          "gpu_utilization_percent": 77,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 700,
+          "gpu_utilization_percent": 69,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 800,
+          "gpu_utilization_percent": 73,
+          "reported_vram_used_mib": 8891
+        }
+      ],
+      "checkpoint": {
+        "epoch": 3,
+        "weight_sha256": "28a5cb45ce808f22b54e5ac11adf879f18c0609a098ab547a49a0df43239762b",
+        "weight_bytes": 842609220,
+        "inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775"
+      }
+    },
+    {
+      "epoch": 4,
+      "mean_training_loss": 0.0,
+      "optimizer_update_attempts": 105,
+      "optimizer_updates_applied": 105,
+      "grad_scaler_skipped_updates": 0,
+      "scheduler_steps": 105,
+      "duration_seconds": 106.40602753125131,
+      "cuda_peak_allocated_bytes": 8348235776,
+      "cuda_peak_reserved_bytes": 9036627968,
+      "nvidia_smi_samples": [
+        {
+          "batch": 100,
+          "gpu_utilization_percent": 96,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 200,
+          "gpu_utilization_percent": 75,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 300,
+          "gpu_utilization_percent": 64,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 400,
+          "gpu_utilization_percent": 57,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 500,
+          "gpu_utilization_percent": 94,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 600,
+          "gpu_utilization_percent": 76,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 700,
+          "gpu_utilization_percent": 80,
+          "reported_vram_used_mib": 8891
+        },
+        {
+          "batch": 800,
+          "gpu_utilization_percent": 72,
+          "reported_vram_used_mib": 8891
+        }
+      ],
+      "checkpoint": {
+        "epoch": 4,
+        "weight_sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+        "weight_bytes": 842609220,
+        "inference_config_sha256": "ea76bb5858a000c229bfc86ab9c1bf51c4a4d8841e506f93ff94599607b68775"
+      }
+    }
+  ],
+  "optimizer_update_attempts": 420,
+  "optimizer_updates_applied": 413,
+  "grad_scaler_skipped_updates": 7,
+  "scheduler_steps": 413,
+  "status": "complete",
+  "total_duration_seconds": 427.8621196039021,
+  "peak_rss_bytes": 3256786944
+}

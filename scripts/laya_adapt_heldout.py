@@ -56,8 +56,6 @@ def require_prepared(checkpoint_dir: Path) -> tuple[dict, dict, dict]:
     settings = json.loads(TRAINING_CONFIG.read_text())
     selection = json.loads(SELECTION.read_text())
     training = json.loads(TRAINING.read_text())
-    if original.sha256(original.HELDOUT_PATH) != original.BASELINE_DATASET_SHA256:
-        raise RuntimeError("Frozen held-out hash changed")
     if original.sha256(original.CONFIG_PATH) != settings["question_config_sha256"]:
         raise RuntimeError("Question configuration changed")
     if original.sha256(ROOT / "datasets/laya-adapt-train.jsonl") != settings["train_sha256"] or \

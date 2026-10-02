@@ -81,8 +81,20 @@ evaluator is separate from the HTTP entrypoint and audit validation is pure.
 - [Experimental Jev 1.13 held-out report](docs/evaluation/jev-1.13-held-out-4c41e0b.md)
 - [Experimental Jev 1.13 held-out artifact](artifacts/jev-1.13-held-out-4c41e0b.json)
 - [Jev freeze manifest](artifacts/jev-1.13-freeze.json)
+- [Laya evaluation protocol](docs/evaluation/laya-protocol.md)
+- [Laya frozen held-out report](docs/evaluation/laya-held-out-a9725ea.md)
+- [Laya machine-readable artifact](artifacts/laya-held-out.json)
+- [Laya freeze manifest](artifacts/laya-freeze.json)
 - [PT-BR portfolio case](docs/portfolio-case-pt-br.md)
 - [English portfolio case](docs/portfolio-case-en.md)
+
+The project now has four evaluation perspectives on the frozen synthetic
+held-out: deterministic baseline, local generative LLM (Ollama), hosted typed
+probabilistic model (Jev 1.13), and open-source/self-hosted decision model
+(Laya). Jev and Laya are evaluation-only; neither later experiment changed
+the production runtime or `HybridPolicy`. Laya used the pinned general English
+checkpoint zero-shot on 70 tickets, with its full results, CPU environment,
+uncertainty analysis and limitations in the [report](docs/evaluation/laya-held-out-a9725ea.md).
 
 Jev was tested as a typed decision model because ticket category, priority and
 risk are closed choices. This isolated OpenRouter Decisions API experiment used

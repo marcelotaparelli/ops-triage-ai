@@ -1,0 +1,555 @@
+{
+  "mode": "dev",
+  "created_at": "2026-10-02T06:35:57.090538+00:00",
+  "code_commit": "827ce6477b0c84c1d3407459acb1977ace67ee8d",
+  "source_hash": "cb5d6958f30d076a0f9b2160c4571f9173c07c9092aa04962c53473a3cebcf6d",
+  "dataset_hash": "1d2ec8a602c72bac9989fd54a86312207e471b98ee8a500fcc9d1905259af57b",
+  "configuration": {
+    "protocol": "laya-english-zero-shot-v1",
+    "library": "laya==0.3.23",
+    "model": "convaiinnovations/laya",
+    "revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+    "device": "cpu",
+    "max_len": 512,
+    "head_max_len": 192,
+    "torch_threads": 4,
+    "compile": false,
+    "fast": false,
+    "batch_size": null,
+    "calibration_override": null,
+    "min_confidence": null,
+    "smoke_ids": [
+      "dev-incident-01",
+      "dev-access-01",
+      "dev-support-01"
+    ],
+    "selective_thresholds": [
+      0,
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ],
+    "questions": {
+      "category": {
+        "type": "choice",
+        "instructions": "Classify this English operational ticket by the observed problem or requested action. Use explicit evidence.",
+        "criteria": {
+          "INCIDENT": "Service degradation or unavailability, outage.",
+          "BUG": "Incorrect existing behavior, error, regression or functional failure.",
+          "FEATURE_REQUEST": "New capability or functional improvement.",
+          "CONTENT_CHANGE": "Editorial text, copy, translation or visual content change.",
+          "SUPPORT": "Help, guidance, explanation or usage instructions.",
+          "ACCESS": "Authentication, login, credentials, permission or authorization problem.",
+          "OTHER": "Information or note needing none of these actions."
+        }
+      },
+      "priority": {
+        "type": "choice",
+        "instructions": "Assign ticket priority from explicit operational impact. Default INCIDENT to HIGH, BUG and ACCESS to MEDIUM, other categories to LOW unless evidence warrants more.",
+        "criteria": {
+          "LOW": "Feature, content, support or informational request without exceptional impact.",
+          "MEDIUM": "Bug or access problem without blocking or severe impact.",
+          "HIGH": "Incident; blocking bug or critical access/work/deployment problem.",
+          "CRITICAL": "Data loss/corruption, security compromise, or production outage with broad user impact."
+        }
+      },
+      "risk": {
+        "type": "choice",
+        "instructions": "Assign operational risk from explicit evidence, not speculation. Default incident to MEDIUM; ordinary bug, login and routine requests to LOW.",
+        "criteria": {
+          "LOW": "No explicit operational harm; routine bug, login or request.",
+          "MEDIUM": "Incident, blocking regression or operational permission problem without proven severe harm.",
+          "HIGH": "Actual production outage, data loss/corruption or security compromise."
+        }
+      }
+    }
+  },
+  "hardware": {
+    "os": "Linux-6.12.98-x86_64-with-glibc2.36",
+    "architecture": "x86_64",
+    "cpu_model": "AMD EPYC",
+    "logical_cpus": 4,
+    "memory_bytes": {
+      "MemTotal": 4131598336,
+      "MemAvailable": 3563704320
+    },
+    "gpu": null,
+    "vram_bytes": null,
+    "cuda_version": null,
+    "python": "3.11.2",
+    "torch": "2.5.1+cpu",
+    "transformers": "5.18.0",
+    "laya": "0.3.23",
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "lifecycle": {
+    "load_ms": 25598.1508,
+    "rss_before_bytes": 232640512,
+    "rss_after_bytes": 2073464832,
+    "device_actual": "cpu",
+    "dtype_actual": "torch.float32"
+  },
+  "rows": [
+    {
+      "id": "dev-incident-01",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "CRITICAL",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 0.9153,
+            "answer_confidence": 0.9688,
+            "probabilities": {
+              "INCIDENT": 0.9688,
+              "BUG": 0.0012,
+              "FEATURE_REQUEST": 0.0009,
+              "CONTENT_CHANGE": 0.001,
+              "SUPPORT": 0.0022,
+              "ACCESS": 0.0012,
+              "OTHER": 0.0247
+            },
+            "margin": 0.9441
+          },
+          "priority": {
+            "choice": "CRITICAL",
+            "confidence": 0.348,
+            "answer_confidence": 0.6483,
+            "probabilities": {
+              "LOW": 0.0244,
+              "MEDIUM": 0.0677,
+              "HIGH": 0.2596,
+              "CRITICAL": 0.6483
+            },
+            "margin": 0.3887
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 0.5072,
+            "answer_confidence": 0.8248,
+            "probabilities": {
+              "LOW": 0.0282,
+              "MEDIUM": 0.147,
+              "HIGH": 0.8248
+            },
+            "margin": 0.6778
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1511.1997
+    },
+    {
+      "id": "dev-access-01",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 0.9818,
+            "answer_confidence": 0.9955,
+            "probabilities": {
+              "INCIDENT": 0.0013,
+              "BUG": 0.0009,
+              "FEATURE_REQUEST": 0.0002,
+              "CONTENT_CHANGE": 0.0002,
+              "SUPPORT": 0.0015,
+              "ACCESS": 0.9955,
+              "OTHER": 0.0004
+            },
+            "margin": 0.994
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 0.2093,
+            "answer_confidence": 0.5379,
+            "probabilities": {
+              "LOW": 0.0518,
+              "MEDIUM": 0.2951,
+              "HIGH": 0.5379,
+              "CRITICAL": 0.1152
+            },
+            "margin": 0.2428
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 0.3216,
+            "answer_confidence": 0.7207,
+            "probabilities": {
+              "LOW": 0.2131,
+              "MEDIUM": 0.7207,
+              "HIGH": 0.0662
+            },
+            "margin": 0.5076
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1397.5573
+    },
+    {
+      "id": "dev-support-01",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 0.8039,
+            "answer_confidence": 0.925,
+            "probabilities": {
+              "INCIDENT": 0.0025,
+              "BUG": 0.013,
+              "FEATURE_REQUEST": 0.0093,
+              "CONTENT_CHANGE": 0.0096,
+              "SUPPORT": 0.925,
+              "ACCESS": 0.0078,
+              "OTHER": 0.0328
+            },
+            "margin": 0.8922
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 0.3679,
+            "answer_confidence": 0.7185,
+            "probabilities": {
+              "LOW": 0.154,
+              "MEDIUM": 0.7185,
+              "HIGH": 0.0672,
+              "CRITICAL": 0.0603
+            },
+            "margin": 0.5645
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 0.2559,
+            "answer_confidence": 0.5448,
+            "probabilities": {
+              "LOW": 0.5448,
+              "MEDIUM": 0.4182,
+              "HIGH": 0.037
+            },
+            "margin": 0.1266
+          }
+        },
+        "usage": {
+          "input_tokens": 397,
+          "output_tokens": 0,
+          "state_tokens": 22,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1494.9961
+    }
+  ],
+  "analysis": {
+    "attempts": 3,
+    "valid": 3,
+    "failures": {},
+    "metrics": {
+      "categoryAccuracy": 1.0,
+      "priorityAccuracy": 0.3333,
+      "riskAccuracy": 0.6667,
+      "categoryMacroF1": 0.4286,
+      "highCriticalPriorityRecall": 1.0,
+      "highRiskRecall": 1.0,
+      "exactTupleAccuracy": 0.3333
+    },
+    "latency_ms": {
+      "cold_first": 1511.1997,
+      "warm_mean": 1446.2767,
+      "mean": 1467.9177,
+      "p50": 1494.9961,
+      "p95": 1511.1997,
+      "max": 1511.1997,
+      "sequential_requests_per_second": 0.6812371020527922
+    },
+    "calibration": {
+      "category": {
+        "brier": 0.0029112933333333316,
+        "ece": 0.03689999999999982,
+        "mean_answer_confidence": 0.9631000000000002,
+        "mean_entropy_confidence": 0.9003333333333333,
+        "mean_margin": 0.9434333333333332,
+        "buckets": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 3,
+            "accuracy": 1.0,
+            "mean_probability": 0.9631000000000002
+          }
+        ],
+        "details": [
+          {
+            "id": "dev-incident-01",
+            "correct": true,
+            "confidence": 0.9153,
+            "top_probability": 0.9688,
+            "margin": 0.9441,
+            "brier": 0.0015930600000000003
+          },
+          {
+            "id": "dev-access-01",
+            "correct": true,
+            "confidence": 0.9818,
+            "top_probability": 0.9955,
+            "margin": 0.994,
+            "brier": 2.5239999999999535e-05
+          },
+          {
+            "id": "dev-support-01",
+            "correct": true,
+            "confidence": 0.8039,
+            "top_probability": 0.925,
+            "margin": 0.8922,
+            "brier": 0.007115579999999995
+          }
+        ]
+      },
+      "priority": {
+        "brier": 0.7461828600000001,
+        "ece": 0.30156666666666665,
+        "mean_answer_confidence": 0.6349,
+        "mean_entropy_confidence": 0.3084,
+        "mean_margin": 0.39866666666666667,
+        "buckets": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 1,
+            "accuracy": 0.0,
+            "mean_probability": 0.5379
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 2,
+            "accuracy": 0.5,
+            "mean_probability": 0.6834
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          }
+        ],
+        "details": [
+          {
+            "id": "dev-incident-01",
+            "correct": true,
+            "confidence": 0.348,
+            "top_probability": 0.6483,
+            "margin": 0.3887,
+            "brier": 0.19626369999999999
+          },
+          {
+            "id": "dev-access-01",
+            "correct": false,
+            "confidence": 0.2093,
+            "top_probability": 0.5379,
+            "margin": 0.2428,
+            "brier": 0.8021747000000001
+          },
+          {
+            "id": "dev-support-01",
+            "correct": false,
+            "confidence": 0.3679,
+            "top_probability": 0.7185,
+            "margin": 0.5645,
+            "brier": 1.24011018
+          }
+        ]
+      },
+      "risk": {
+        "brier": 0.5265230333333334,
+        "ece": 0.4503666666666667,
+        "mean_answer_confidence": 0.6967666666666666,
+        "mean_entropy_confidence": 0.36156666666666665,
+        "mean_margin": 0.43733333333333335,
+        "buckets": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 1,
+            "accuracy": 1.0,
+            "mean_probability": 0.5448
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 1,
+            "accuracy": 0.0,
+            "mean_probability": 0.7207
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 1,
+            "accuracy": 1.0,
+            "mean_probability": 0.8248
+          }
+        ],
+        "details": [
+          {
+            "id": "dev-incident-01",
+            "correct": true,
+            "confidence": 0.5072,
+            "top_probability": 0.8248,
+            "margin": 0.6778,
+            "brier": 0.05309928
+          },
+          {
+            "id": "dev-access-01",
+            "correct": false,
+            "confidence": 0.3216,
+            "top_probability": 0.7207,
+            "margin": 0.5076,
+            "brier": 1.14300254
+          },
+          {
+            "id": "dev-support-01",
+            "correct": true,
+            "confidence": 0.2559,
+            "top_probability": 0.5448,
+            "margin": 0.1266,
+            "brier": 0.38346728
+          }
+        ]
+      }
+    },
+    "selective": [
+      {
+        "threshold": 0,
+        "count": 3,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.3333333333333333
+      },
+      {
+        "threshold": 0.5,
+        "count": 3,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.3333333333333333
+      },
+      {
+        "threshold": 0.7,
+        "count": 0,
+        "coverage": 0.0,
+        "exactTupleAccuracy": null
+      },
+      {
+        "threshold": 0.8,
+        "count": 0,
+        "coverage": 0.0,
+        "exactTupleAccuracy": null
+      },
+      {
+        "threshold": 0.9,
+        "count": 0,
+        "coverage": 0.0,
+        "exactTupleAccuracy": null
+      },
+      {
+        "threshold": 0.95,
+        "count": 0,
+        "coverage": 0.0,
+        "exactTupleAccuracy": null
+      },
+      {
+        "threshold": 0.99,
+        "count": 0,
+        "coverage": 0.0,
+        "exactTupleAccuracy": null
+      }
+    ]
+  },
+  "peak_rss_bytes": 2915766272
+}

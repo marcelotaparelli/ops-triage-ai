@@ -5,6 +5,12 @@ coverage/
 .env.local
 *.local
 src/generated/
+.venv/
+.tools/
+.cache/
+.laya-model-metadata.json
+__pycache__/
+*.pyc
 
 # Local agent operational memory — never version
 .agent/

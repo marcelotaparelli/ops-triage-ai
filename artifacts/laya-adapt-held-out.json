@@ -1,0 +1,6063 @@
+{
+  "status": "complete",
+  "completed_at": "2026-10-02T18:59:11.612820+00:00",
+  "freeze_commit": "00a9a64d26e058feac2283493ef234be4f5f3aaf",
+  "freeze_hash": "5637216e695838a9a697c18e04e93cc68d6a716ce5335235dc2230b8f9334930",
+  "dataset_hash": "e3864aaefba8327dff78a0e7680df55650c995664e29daea31aaab85abe63ab0",
+  "hardware": {
+    "os": "Linux-6.12.98-x86_64-with-glibc2.36",
+    "os_release": {
+      "PRETTY_NAME": "Debian GNU/Linux 12 (bookworm)",
+      "VERSION_ID": "12",
+      "ID": "debian"
+    },
+    "architecture": "x86_64",
+    "cpu_model": "AMD EPYC",
+    "logical_cpus": 4,
+    "memory_bytes": {
+      "MemTotal": 4131598336,
+      "MemAvailable": 3432714240
+    },
+    "gpu": null,
+    "vram_bytes": null,
+    "cuda_version": null,
+    "python": "3.11.2",
+    "torch": "2.5.1+cpu",
+    "transformers": "5.18.0",
+    "laya": "0.3.23",
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "lifecycle": {
+    "load_ms": 4260.948267999993,
+    "rss_before_bytes": 232292352,
+    "rss_after_bytes": 2046353408,
+    "device_actual": "cpu",
+    "dtype_actual": "torch.float32",
+    "checkpoint": {
+      "weight_sha256": "423cf6a850e77c2e2b4699c02379967be6428bc19c4f836a434cc888e5252fa7",
+      "weight_bytes": 842609220
+    }
+  },
+  "peak_rss_bytes": 2888462336,
+  "wall_seconds_including_load": 121.06849747899832,
+  "rows": [
+    {
+      "id": "eval-incident-01",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "CRITICAL",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "CRITICAL",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 1.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1652.2177
+    },
+    {
+      "id": "eval-incident-02",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1556.0385
+    },
+    {
+      "id": "eval-incident-03",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1595.8014
+    },
+    {
+      "id": "eval-incident-04",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1623.7211
+    },
+    {
+      "id": "eval-incident-05",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1570.1455
+    },
+    {
+      "id": "eval-incident-06",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 0.9983,
+            "answer_confidence": 0.9998,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.9998,
+              "CRITICAL": 0.0002
+            },
+            "margin": 0.9996
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1560.0871
+    },
+    {
+      "id": "eval-incident-07",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1569.1007
+    },
+    {
+      "id": "eval-incident-08",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 0,
+          "state_tokens": 17,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1608.8018
+    },
+    {
+      "id": "eval-incident-09",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "CRITICAL",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 0.9999,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 397,
+          "output_tokens": 0,
+          "state_tokens": 22,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1622.3104
+    },
+    {
+      "id": "eval-incident-10",
+      "expected": {
+        "category": "INCIDENT",
+        "priority": "HIGH",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "INCIDENT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 1.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1572.3702
+    },
+    {
+      "id": "eval-bug-01",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1665.7801
+    },
+    {
+      "id": "eval-bug-02",
+      "expected": {
+        "category": "BUG",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1653.9731
+    },
+    {
+      "id": "eval-bug-03",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1558.167
+    },
+    {
+      "id": "eval-bug-04",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1609.8602
+    },
+    {
+      "id": "eval-bug-05",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 397,
+          "output_tokens": 0,
+          "state_tokens": 22,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1621.5193
+    },
+    {
+      "id": "eval-bug-06",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1558.5711
+    },
+    {
+      "id": "eval-bug-07",
+      "expected": {
+        "category": "BUG",
+        "priority": "CRITICAL",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1531.4854
+    },
+    {
+      "id": "eval-bug-08",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1587.002
+    },
+    {
+      "id": "eval-bug-09",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1655.7613
+    },
+    {
+      "id": "eval-bug-10",
+      "expected": {
+        "category": "BUG",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "BUG",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 1.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1596.0315
+    },
+    {
+      "id": "eval-feature-01",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1635.4511
+    },
+    {
+      "id": "eval-feature-02",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1584.6447
+    },
+    {
+      "id": "eval-feature-03",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1601.9902
+    },
+    {
+      "id": "eval-feature-04",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1630.78
+    },
+    {
+      "id": "eval-feature-05",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1596.9676
+    },
+    {
+      "id": "eval-feature-06",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1619.6607
+    },
+    {
+      "id": "eval-feature-07",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1604.9779
+    },
+    {
+      "id": "eval-feature-08",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1685.8128
+    },
+    {
+      "id": "eval-feature-09",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1653.849
+    },
+    {
+      "id": "eval-feature-10",
+      "expected": {
+        "category": "FEATURE_REQUEST",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 397,
+          "output_tokens": 0,
+          "state_tokens": 22,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1768.9906
+    },
+    {
+      "id": "eval-content-01",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1595.7989
+    },
+    {
+      "id": "eval-content-02",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1592.2168
+    },
+    {
+      "id": "eval-content-03",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 397,
+          "output_tokens": 0,
+          "state_tokens": 22,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1639.9001
+    },
+    {
+      "id": "eval-content-04",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1595.5151
+    },
+    {
+      "id": "eval-content-05",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 0,
+          "state_tokens": 17,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1577.9423
+    },
+    {
+      "id": "eval-content-06",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1612.8626
+    },
+    {
+      "id": "eval-content-07",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1684.134
+    },
+    {
+      "id": "eval-content-08",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1622.7326
+    },
+    {
+      "id": "eval-content-09",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 0,
+          "state_tokens": 17,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1622.6496
+    },
+    {
+      "id": "eval-content-10",
+      "expected": {
+        "category": "CONTENT_CHANGE",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "CONTENT_CHANGE",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 1.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1628.1831
+    },
+    {
+      "id": "eval-support-01",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 403,
+          "output_tokens": 0,
+          "state_tokens": 24,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1735.7973
+    },
+    {
+      "id": "eval-support-02",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1689.7895
+    },
+    {
+      "id": "eval-support-03",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 0.9692,
+            "answer_confidence": 0.9905,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0001,
+              "FEATURE_REQUEST": 0.0001,
+              "CONTENT_CHANGE": 0.0017,
+              "SUPPORT": 0.9905,
+              "ACCESS": 0.0,
+              "OTHER": 0.0076
+            },
+            "margin": 0.9829
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1617.6213
+    },
+    {
+      "id": "eval-support-04",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1629.9464
+    },
+    {
+      "id": "eval-support-05",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1620.7619
+    },
+    {
+      "id": "eval-support-06",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1595.1733
+    },
+    {
+      "id": "eval-support-07",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1648.1834
+    },
+    {
+      "id": "eval-support-08",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1643.8059
+    },
+    {
+      "id": "eval-support-09",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 400,
+          "output_tokens": 0,
+          "state_tokens": 23,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1649.3586
+    },
+    {
+      "id": "eval-support-10",
+      "expected": {
+        "category": "SUPPORT",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "SUPPORT",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 1.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1618.7615
+    },
+    {
+      "id": "eval-access-01",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1602.2624
+    },
+    {
+      "id": "eval-access-02",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1585.2905
+    },
+    {
+      "id": "eval-access-03",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 0,
+          "state_tokens": 17,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1548.645
+    },
+    {
+      "id": "eval-access-04",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1590.7369
+    },
+    {
+      "id": "eval-access-05",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1645.2203
+    },
+    {
+      "id": "eval-access-06",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 0.7437,
+            "answer_confidence": 0.9188,
+            "probabilities": {
+              "LOW": 0.0812,
+              "MEDIUM": 0.9188,
+              "HIGH": 0.0
+            },
+            "margin": 0.8376
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1592.4823
+    },
+    {
+      "id": "eval-access-07",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "HIGH",
+        "risk": "MEDIUM"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 385,
+          "output_tokens": 0,
+          "state_tokens": 18,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1602.5607
+    },
+    {
+      "id": "eval-access-08",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "CRITICAL",
+        "risk": "HIGH"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 0.9997,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1616.5827
+    },
+    {
+      "id": "eval-access-09",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "HIGH",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 0.0,
+              "HIGH": 1.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1727.3654
+    },
+    {
+      "id": "eval-access-10",
+      "expected": {
+        "category": "ACCESS",
+        "priority": "MEDIUM",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "MEDIUM",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 0.0,
+              "MEDIUM": 1.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1675.6883
+    },
+    {
+      "id": "eval-other-01",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1660.0164
+    },
+    {
+      "id": "eval-other-02",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1620.9343
+    },
+    {
+      "id": "eval-other-03",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 0.9893,
+            "answer_confidence": 0.998,
+            "probabilities": {
+              "LOW": 0.998,
+              "MEDIUM": 0.0001,
+              "HIGH": 0.0019,
+              "CRITICAL": 0.0
+            },
+            "margin": 0.9961
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1600.6294
+    },
+    {
+      "id": "eval-other-04",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1633.2365
+    },
+    {
+      "id": "eval-other-05",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1590.5262
+    },
+    {
+      "id": "eval-other-06",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1648.4327
+    },
+    {
+      "id": "eval-other-07",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 394,
+          "output_tokens": 0,
+          "state_tokens": 21,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1651.3932
+    },
+    {
+      "id": "eval-other-08",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "FEATURE_REQUEST",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 1.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 388,
+          "output_tokens": 0,
+          "state_tokens": 19,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1572.1056
+    },
+    {
+      "id": "eval-other-09",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "OTHER",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 0.0,
+              "OTHER": 1.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 382,
+          "output_tokens": 0,
+          "state_tokens": 17,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1560.4944
+    },
+    {
+      "id": "eval-other-10",
+      "expected": {
+        "category": "OTHER",
+        "priority": "LOW",
+        "risk": "LOW"
+      },
+      "result": {
+        "answers": {
+          "category": {
+            "choice": "ACCESS",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "INCIDENT": 0.0,
+              "BUG": 0.0,
+              "FEATURE_REQUEST": 0.0,
+              "CONTENT_CHANGE": 0.0,
+              "SUPPORT": 0.0,
+              "ACCESS": 1.0,
+              "OTHER": 0.0
+            },
+            "margin": 1.0
+          },
+          "priority": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0,
+              "CRITICAL": 0.0
+            },
+            "margin": 1.0
+          },
+          "risk": {
+            "choice": "LOW",
+            "confidence": 1.0,
+            "answer_confidence": 1.0,
+            "probabilities": {
+              "LOW": 1.0,
+              "MEDIUM": 0.0,
+              "HIGH": 0.0
+            },
+            "margin": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 391,
+          "output_tokens": 0,
+          "state_tokens": 20,
+          "state_tokens_dropped": 0,
+          "truncated": false,
+          "truncated_questions": []
+        }
+      },
+      "latency_ms": 1620.72
+    }
+  ],
+  "analysis": {
+    "attempts": 70,
+    "valid": 70,
+    "failures": {},
+    "metrics": {
+      "categoryAccuracy": 0.9714,
+      "priorityAccuracy": 0.9429,
+      "riskAccuracy": 0.9286,
+      "categoryMacroF1": 0.9705,
+      "highCriticalPriorityRecall": 0.8571,
+      "highRiskRecall": 1.0,
+      "exactTupleAccuracy": 0.8571
+    },
+    "latency_ms": {
+      "cold_first": 1652.2177,
+      "warm_mean": 1618.349415942029,
+      "mean": 1618.8332485714284,
+      "p50": 1617.6213,
+      "p95": 1689.7895,
+      "max": 1768.9906,
+      "sequential_requests_per_second": 0.6177288493935184
+    },
+    "calibration": {
+      "category": {
+        "brier": 0.05714501314285714,
+        "ece": 0.02843571428571423,
+        "mean_answer_confidence": 0.9998642857142856,
+        "mean_entropy_confidence": 0.99956,
+        "mean_margin": 0.9997557142857143,
+        "buckets": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 70,
+            "accuracy": 0.9714285714285714,
+            "mean_probability": 0.9998642857142856
+          }
+        ],
+        "details": [
+          {
+            "id": "eval-incident-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-03",
+            "correct": true,
+            "confidence": 0.9692,
+            "top_probability": 0.9905,
+            "margin": 0.9829,
+            "brier": 0.0001509199999999991
+          },
+          {
+            "id": "eval-support-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-08",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-other-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-10",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          }
+        ]
+      },
+      "priority": {
+        "brier": 0.11428582428571428,
+        "ece": 0.05711142857142859,
+        "mean_answer_confidence": 0.9999685714285714,
+        "mean_entropy_confidence": 0.9998171428571428,
+        "mean_margin": 0.9999385714285715,
+        "buckets": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 70,
+            "accuracy": 0.9428571428571428,
+            "mean_probability": 0.9999685714285714
+          }
+        ],
+        "details": [
+          {
+            "id": "eval-incident-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-06",
+            "correct": true,
+            "confidence": 0.9983,
+            "top_probability": 0.9998,
+            "margin": 0.9996,
+            "brier": 7.999999999999119e-08
+          },
+          {
+            "id": "eval-incident-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-09",
+            "correct": false,
+            "confidence": 0.9999,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-incident-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-07",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-bug-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-08",
+            "correct": false,
+            "confidence": 0.9997,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-access-09",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-access-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-03",
+            "correct": true,
+            "confidence": 0.9893,
+            "top_probability": 0.998,
+            "margin": 0.9961,
+            "brier": 7.6200000000000075e-06
+          },
+          {
+            "id": "eval-other-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          }
+        ]
+      },
+      "risk": {
+        "brier": 0.13840552685714286,
+        "ece": 0.07026857142857146,
+        "mean_answer_confidence": 0.9988400000000001,
+        "mean_entropy_confidence": 0.9963385714285713,
+        "mean_margin": 0.9976800000000001,
+        "buckets": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 0,
+            "accuracy": null,
+            "mean_probability": null
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 70,
+            "accuracy": 0.9285714285714286,
+            "mean_probability": 0.9988400000000001
+          }
+        ],
+        "details": [
+          {
+            "id": "eval-incident-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-05",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-incident-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-incident-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-04",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-bug-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-bug-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-feature-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-content-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-support-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-02",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-access-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-06",
+            "correct": false,
+            "confidence": 0.7437,
+            "top_probability": 0.9188,
+            "margin": 0.8376,
+            "brier": 1.68838688
+          },
+          {
+            "id": "eval-access-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-access-09",
+            "correct": false,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 2.0
+          },
+          {
+            "id": "eval-access-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-01",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-02",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-03",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-04",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-05",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-06",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-07",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-08",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-09",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          },
+          {
+            "id": "eval-other-10",
+            "correct": true,
+            "confidence": 1.0,
+            "top_probability": 1.0,
+            "margin": 1.0,
+            "brier": 0.0
+          }
+        ]
+      }
+    },
+    "selective": [
+      {
+        "threshold": 0,
+        "count": 70,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.8571428571428571
+      },
+      {
+        "threshold": 0.5,
+        "count": 70,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.8571428571428571
+      },
+      {
+        "threshold": 0.7,
+        "count": 70,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.8571428571428571
+      },
+      {
+        "threshold": 0.8,
+        "count": 70,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.8571428571428571
+      },
+      {
+        "threshold": 0.9,
+        "count": 70,
+        "coverage": 1.0,
+        "exactTupleAccuracy": 0.8571428571428571
+      },
+      {
+        "threshold": 0.95,
+        "count": 69,
+        "coverage": 0.9857142857142858,
+        "exactTupleAccuracy": 0.8695652173913043
+      },
+      {
+        "threshold": 0.99,
+        "count": 69,
+        "coverage": 0.9857142857142858,
+        "exactTupleAccuracy": 0.8695652173913043
+      }
+    ]
+  }
+}

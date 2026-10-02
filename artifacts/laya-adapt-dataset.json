@@ -1,0 +1,104 @@
+{
+  "protocol": "laya-domain-adaptation-dataset-v1",
+  "seed": 20261002,
+  "source": "authored project taxonomy/rules and scenario blueprints in scripts/laya_adapt_dataset.py; no LLM and no held-out source",
+  "generator_sha256": "d183278b109d2b04aed709a6241d72a841140fa617da200932a078e8dd5c2a20",
+  "splits": {
+    "train": {
+      "path": "datasets/laya-adapt-train.jsonl",
+      "sha256": "1778df721ed4d89a128295ca3b41334b9bf71bfa89112f2b053ed2d7a55c1d35",
+      "count": 1120,
+      "category": {
+        "ACCESS": 191,
+        "BUG": 231,
+        "CONTENT_CHANGE": 131,
+        "FEATURE_REQUEST": 170,
+        "INCIDENT": 191,
+        "OTHER": 77,
+        "SUPPORT": 129
+      },
+      "priority": {
+        "CRITICAL": 100,
+        "HIGH": 236,
+        "LOW": 507,
+        "MEDIUM": 277
+      },
+      "risk": {
+        "HIGH": 156,
+        "LOW": 685,
+        "MEDIUM": 279
+      },
+      "tuples": {
+        "ACCESS/CRITICAL/HIGH": 24,
+        "ACCESS/HIGH/MEDIUM": 41,
+        "ACCESS/MEDIUM/LOW": 69,
+        "ACCESS/MEDIUM/MEDIUM": 57,
+        "BUG/CRITICAL/HIGH": 31,
+        "BUG/HIGH/MEDIUM": 49,
+        "BUG/MEDIUM/LOW": 109,
+        "BUG/MEDIUM/MEDIUM": 42,
+        "CONTENT_CHANGE/LOW/LOW": 131,
+        "FEATURE_REQUEST/LOW/LOW": 170,
+        "INCIDENT/CRITICAL/HIGH": 45,
+        "INCIDENT/HIGH/HIGH": 56,
+        "INCIDENT/HIGH/MEDIUM": 90,
+        "OTHER/LOW/LOW": 77,
+        "SUPPORT/LOW/LOW": 129
+      },
+      "text_chars": {
+        "min": 96,
+        "median": 158,
+        "p95": 462,
+        "max": 491
+      }
+    },
+    "validation": {
+      "path": "datasets/laya-adapt-validation.jsonl",
+      "sha256": "ef7aa6d8a3b318e7757e03902c19da005b379d854f4157cd97f171baed8b008c",
+      "count": 280,
+      "category": {
+        "ACCESS": 43,
+        "BUG": 62,
+        "CONTENT_CHANGE": 36,
+        "FEATURE_REQUEST": 42,
+        "INCIDENT": 42,
+        "OTHER": 24,
+        "SUPPORT": 31
+      },
+      "priority": {
+        "CRITICAL": 17,
+        "HIGH": 64,
+        "LOW": 133,
+        "MEDIUM": 66
+      },
+      "risk": {
+        "HIGH": 28,
+        "LOW": 182,
+        "MEDIUM": 70
+      },
+      "tuples": {
+        "ACCESS/CRITICAL/HIGH": 4,
+        "ACCESS/HIGH/MEDIUM": 15,
+        "ACCESS/MEDIUM/LOW": 15,
+        "ACCESS/MEDIUM/MEDIUM": 9,
+        "BUG/CRITICAL/HIGH": 6,
+        "BUG/HIGH/MEDIUM": 14,
+        "BUG/MEDIUM/LOW": 34,
+        "BUG/MEDIUM/MEDIUM": 8,
+        "CONTENT_CHANGE/LOW/LOW": 36,
+        "FEATURE_REQUEST/LOW/LOW": 42,
+        "INCIDENT/CRITICAL/HIGH": 7,
+        "INCIDENT/HIGH/HIGH": 11,
+        "INCIDENT/HIGH/MEDIUM": 24,
+        "OTHER/LOW/LOW": 24,
+        "SUPPORT/LOW/LOW": 31
+      },
+      "text_chars": {
+        "min": 112,
+        "median": 174,
+        "p95": 459,
+        "max": 476
+      }
+    }
+  }
+}

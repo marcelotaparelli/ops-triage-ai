@@ -74,6 +74,26 @@ def collate(items: list[dict], pad_id: int):
     return ids, attention, positions, mask, target, qtype
 
 
+def scaler_step_and_schedule(scaler, optimizer, scheduler) -> bool:
+    """Advance the scheduler only if GradScaler actually called optimizer.step()."""
+    optimizer_step_applied = False
+
+    def mark_optimizer_step(_optimizer, _args, _kwargs):
+        nonlocal optimizer_step_applied
+        optimizer_step_applied = True
+
+    hook = optimizer.register_step_post_hook(mark_optimizer_step)
+    try:
+        scaler.step(optimizer)
+        scaler.update()
+    finally:
+        hook.remove()
+
+    if optimizer_step_applied:
+        scheduler.step()
+    return optimizer_step_applied
+
+
 def hardware() -> dict:
     import laya
     import transformers
@@ -168,13 +188,17 @@ def train(output: Path) -> None:
     environment = hardware()
     measurements = {"protocol": settings["protocol"], "settings": settings, "hardware": environment,
                     "train_dataset_sha256": sha256(TRAIN), "base_weight_sha256": sha256(base_dir / "model.safetensors"),
-                    "decisions": len(items), "epoch_results": [], "status": "running"}
+                    "decisions": len(items), "epoch_results": [],
+                    "optimizer_update_attempts": 0, "optimizer_updates_applied": 0,
+                    "grad_scaler_skipped_updates": 0, "scheduler_steps": 0,
+                    "status": "running"}
     (output / "training.json").write_text(json.dumps(measurements, indent=2) + "\n")
     for epoch in range(settings["epochs"]):
         epoch_start = time.perf_counter()
         random.Random(settings["seed"] + epoch).shuffle(items)
         optimizer.zero_grad(set_to_none=True)
-        total_loss, n_batches, update_count = 0.0, 0, 0
+        total_loss, n_batches = 0.0, 0
+        update_attempts = applied_updates = skipped_updates = scheduler_steps = 0
         utilization_samples = []
         sigma = settings["sigma_start"] + (settings["sigma_end"] - settings["sigma_start"]) * epoch / max(1, settings["epochs"] - 1)
         for start in range(0, len(items), microbatch):
@@ -206,11 +230,13 @@ def train(output: Path) -> None:
             if n_batches % accumulation == 0 or start + microbatch >= len(items):
                 scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(model.parameters(), settings["gradient_clip_norm"])
-                scaler.step(optimizer)
-                scaler.update()
-                scheduler.step()
+                update_attempts += 1
+                if scaler_step_and_schedule(scaler, optimizer, scheduler):
+                    applied_updates += 1
+                    scheduler_steps += 1
+                else:
+                    skipped_updates += 1
                 optimizer.zero_grad(set_to_none=True)
-                update_count += 1
             if n_batches % 100 == 0:
                 observation = nvidia_smi("utilization.gpu,memory.used")
                 if observation:
@@ -223,12 +249,19 @@ def train(output: Path) -> None:
                 print(f"epoch {epoch+1}/{settings['epochs']} batch {n_batches} loss {float(loss.detach())*accumulation:.4f}", flush=True)
         checkpoint = save_checkpoint(model, tokenizer, base_cfg, output, epoch + 1)
         result = {"epoch": epoch + 1, "mean_training_loss": total_loss / n_batches,
-                  "optimizer_updates": update_count, "duration_seconds": time.perf_counter() - epoch_start,
+                  "optimizer_update_attempts": update_attempts,
+                  "optimizer_updates_applied": applied_updates,
+                  "grad_scaler_skipped_updates": skipped_updates,
+                  "scheduler_steps": scheduler_steps,
+                  "duration_seconds": time.perf_counter() - epoch_start,
                   "cuda_peak_allocated_bytes": torch.cuda.max_memory_allocated(),
                   "cuda_peak_reserved_bytes": torch.cuda.max_memory_reserved(),
                   "nvidia_smi_samples": utilization_samples,
                   "checkpoint": checkpoint}
         measurements["epoch_results"].append(result)
+        for counter in ("optimizer_update_attempts", "optimizer_updates_applied",
+                        "grad_scaler_skipped_updates", "scheduler_steps"):
+            measurements[counter] = sum(row[counter] for row in measurements["epoch_results"])
         (output / "training.json").write_text(json.dumps(measurements, indent=2) + "\n")
         print(json.dumps(result), flush=True)
     measurements["status"] = "complete"

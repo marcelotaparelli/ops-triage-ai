@@ -67,5 +67,42 @@ class TrainingItemTests(unittest.TestCase):
         self.assertTrue(bool(torch.isfinite(rewards).all()))
 
 
+class ScalerSchedulerCoordinationTests(unittest.TestCase):
+    def setUp(self):
+        self.parameter = torch.nn.Parameter(torch.tensor(1.0))
+        self.optimizer = torch.optim.SGD([self.parameter], lr=0.1)
+        self.scheduler = torch.optim.lr_scheduler.LambdaLR(self.optimizer, lambda _: 1.0)
+        self.scaler = torch.amp.GradScaler("cpu")
+
+    def test_applied_optimizer_update_advances_scheduler(self):
+        scheduler_step_before = self.scheduler.last_epoch
+        parameter_before = self.parameter.detach().clone()
+        scale_before = self.scaler.get_scale()
+        self.scaler.scale(self.parameter.square()).backward()
+        self.scaler.unscale_(self.optimizer)
+
+        applied = training.scaler_step_and_schedule(self.scaler, self.optimizer, self.scheduler)
+
+        self.assertTrue(applied)
+        self.assertEqual(self.scheduler.last_epoch, scheduler_step_before + 1)
+        self.assertNotEqual(self.parameter.item(), parameter_before.item())
+        self.assertEqual(self.scaler.get_scale(), scale_before)
+
+    def test_grad_scaler_overflow_skips_optimizer_and_scheduler(self):
+        scheduler_step_before = self.scheduler.last_epoch
+        parameter_before = self.parameter.detach().clone()
+        scale_before = self.scaler.get_scale()
+        infinite_loss = self.parameter * torch.tensor(float("inf"))
+        self.scaler.scale(infinite_loss).backward()
+        self.scaler.unscale_(self.optimizer)
+
+        applied = training.scaler_step_and_schedule(self.scaler, self.optimizer, self.scheduler)
+
+        self.assertFalse(applied)
+        self.assertEqual(self.scheduler.last_epoch, scheduler_step_before)
+        self.assertEqual(self.parameter.item(), parameter_before.item())
+        self.assertLess(self.scaler.get_scale(), scale_before)
+
+
 if __name__ == "__main__":
     unittest.main()
